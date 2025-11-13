@@ -1,4 +1,4 @@
-import { FaFacebook, FaGithub, FaLinkedin, FaXmark, FaYoutube, FaXTwitter, FaUser, FaEnvelope, FaLock, FaEye, FaEyeSlash, FaGoogle, FaPlus, FaPenToSquare, FaTrash, FaMagnifyingGlass, FaFilter, FaCartShopping, FaArrowRightFromBracket, FaSun, FaMoon, FaImage, FaStar, FaArrowLeft, FaArrowRight, FaCheck, FaXmark as FaTimes, FaCircleInfo, FaCircleExclamation, FaTriangleExclamation } from "react-icons/fa6";
+import { FaFacebook, FaGithub, FaLinkedin, FaXmark, FaYoutube, FaXTwitter, FaUser, FaEnvelope, FaLock, FaEye, FaEyeSlash, FaGoogle, FaPlus, FaPenToSquare, FaTrash, FaMagnifyingGlass, FaFilter, FaCartShopping, FaArrowRightFromBracket, FaSun, FaMoon, FaImage, FaStar, FaArrowLeft, FaArrowRight, FaCheck, FaXmark as FaTimes, FaCircleInfo, FaCircleExclamation, FaTriangleExclamation, FaCalendarDays, FaHeart, FaShield, FaBolt, FaPalette, FaMobile, FaWandMagicSparkles, FaGears, FaRobot, FaHouse, FaDoorOpen, FaBox, FaCreditCard } from "react-icons/fa6";
 import { IoMenu } from "react-icons/io5";
 
 // Menu Icons
@@ -45,8 +45,23 @@ export const ImageIcon = FaImage;
 export const StarIcon = FaStar;
 export const ArrowLeft = FaArrowLeft;
 export const ArrowRight = FaArrowRight;
+export const CalendarIcon = FaCalendarDays;
 
 // Alert Icons
 export const InfoIcon = FaCircleInfo;
 export const WarningIcon = FaTriangleExclamation;
 export const ErrorIcon = FaCircleExclamation;
+
+// Additional Icons
+export const HeartIcon = FaHeart;
+export const ShieldIcon = FaShield;
+export const BoltIcon = FaBolt;
+export const PaletteIcon = FaPalette;
+export const MobileIcon = FaMobile;
+export const MagicIcon = FaWandMagicSparkles;
+export const SettingsIcon = FaGears;
+export const RobotIcon = FaRobot;
+export const HomeIcon = FaHouse;
+export const DoorIcon = FaDoorOpen;
+export const PackageIcon = FaBox;
+export const CreditCardIcon = FaCreditCard;

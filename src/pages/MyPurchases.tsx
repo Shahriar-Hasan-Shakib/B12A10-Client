@@ -4,6 +4,7 @@ import { Layout } from "@src/components/ui/Layout";
 import { useAuth } from "@src/hooks";
 import { mockAIModels } from "@src/data/mockModels";
 import { AUTH, ALL_MODELS } from "@src/constants/";
+import { PurchaseIcon } from "@src/assets/icons";
 
 interface Purchase {
     _id: string;
@@ -123,11 +124,7 @@ export const MyPurchases = () => {
         section: {
             header: {
                 title: <h1>My Purchased Models</h1>,
-                subtitle: (
-                    <p>
-                        View all the AI models you've purchased from the community
-                    </p>
-                ),
+                subtitle: <p>View all the AI models you've purchased from the community</p>,
             },
             count: (
                 <p className="text-base-content/60">
@@ -137,29 +134,11 @@ export const MyPurchases = () => {
             purchases:
                 purchases.length > 0
                     ? purchases.map((purchase) => ({
-                        image: (
-                            <img
-                                src={purchase.image}
-                                alt={purchase.modelName}
-                                className="w-full h-48 object-cover rounded-t-xl"
-                            />
-                        ),
+                        image: <img src={purchase.image} alt={purchase.modelName} className="w-full h-48 object-cover rounded-t-xl" />,
                         name: <h3>{purchase.modelName}</h3>,
-                        framework: (
-                            <span className="badge badge-info gap-2">
-                                {purchase.framework}
-                            </span>
-                        ),
-                        useCase: (
-                            <span className="badge badge-success gap-2 ml-2">
-                                {purchase.useCase}
-                            </span>
-                        ),
-                        description: (
-                            <p className="text-base-content/70 text-sm line-clamp-3">
-                                {purchase.description}
-                            </p>
-                        ),
+                        framework: <span className="badge badge-info gap-2">{purchase.framework}</span>,
+                        useCase: <span className="badge badge-success gap-2 ml-2">{purchase.useCase}</span>,
+                        description: <p className="text-base-content/70 text-sm line-clamp-3">{purchase.description}</p>,
                         metadata: (
                             <div className="space-y-1 text-sm text-base-content/60">
                                 <p>Created by: {purchase.createdBy}</p>
@@ -168,32 +147,22 @@ export const MyPurchases = () => {
                         ),
                         cta: (
                             <Link to={`/models/${purchase.modelId}`}>
-                                <button className="btn btn-primary w-full">
-                                    View Details
-                                </button>
+                                <button className="btn btn-primary w-full">View Details</button>
                             </Link>
                         ),
                     }))
-                    : [
-                        {
-                            empty: (
-                                <div className="col-span-3 text-center py-16">
-                                    <div className="text-6xl mb-4">🛒</div>
-                                    <h3 className="text-2xl font-bold text-base-content mb-2">
-                                        No Purchases Yet
-                                    </h3>
-                                    <p className="text-base-content/70 mb-6">
-                                        You haven't purchased any AI models yet. Explore the catalog to find models that suit your needs.
-                                    </p>
-                                    <Link to={ALL_MODELS}>
-                                        <button className="btn btn-primary">
-                                            Browse Models
-                                        </button>
-                                    </Link>
-                                </div>
-                            ),
-                        },
-                    ],
+                    : [{
+                        empty: (
+                            <div className="col-span-3 text-center py-16">
+                                <PurchaseIcon className="text-6xl mb-4 w-24 h-24" />
+                                <h3 className="text-2xl font-bold text-base-content mb-2">No Purchases Yet</h3>
+                                <p className="text-base-content/70 mb-6">You haven't purchased any AI models yet. Explore the catalog to find models that suit your needs.</p>
+                                <Link to={ALL_MODELS}>
+                                    <button className="btn btn-primary">Browse Models</button>
+                                </Link>
+                            </div>
+                        ),
+                    }],
         },
     };
 

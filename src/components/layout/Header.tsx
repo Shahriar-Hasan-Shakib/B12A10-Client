@@ -1,4 +1,4 @@
-import { CloseIcon, MenuIcon } from '@src/assets/icons';
+import { CloseIcon, MenuIcon, RobotIcon, HomeIcon, AddIcon, SearchIcon, LockIcon, DoorIcon, PackageIcon, CreditCardIcon } from '@src/assets/icons';
 import { ADD_MODEL, ALL_MODELS, HOME, AUTH, MY_MODELS, MY_PURCHASES } from '@src/constants/';
 import React, { useEffect, useRef, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router';
@@ -7,9 +7,9 @@ import type { User } from 'firebase/auth';
 import s from './style.module.css';
 
 const navigationLinks = [
-    { name: '🏠 Home', path: HOME, icon: '🏠' },
-    { name: '➕ Add Model', path: ADD_MODEL, icon: '➕' },
-    { name: '🔍 All Models', path: ALL_MODELS, icon: '🔍' },
+    { name: 'Home', path: HOME, icon: HomeIcon },
+    { name: 'Add Model', path: ADD_MODEL, icon: AddIcon },
+    { name: 'All Models', path: ALL_MODELS, icon: SearchIcon },
 ];
 
 export const Header: React.FC<{ user?: User | null }> = ({ user }) => {
@@ -59,7 +59,7 @@ export const Header: React.FC<{ user?: User | null }> = ({ user }) => {
         <header className={`${s.header} ${scrolled ? s.scrolled : ''}`} ref={headerRef}>
             <div className={s.container}>
                 <NavLink className={s.logo} to={"/"}>
-                    <span className={s.logoIcon}>🤖</span>
+                    <RobotIcon className={`${s.logoIcon} w-6 h-6`} />
                     <h1 className={s.logoText}>AI Models</h1>
                 </NavLink>
 
@@ -68,8 +68,8 @@ export const Header: React.FC<{ user?: User | null }> = ({ user }) => {
                         <NavLink key={link.path} onClick={toggleMenu} to={link.path}
                             className={({ isActive }) => `${s.navLink} ${isActive ? s.active : ''}`}
                         >
-                            <span className={s.navIcon}>{link.icon}</span>
-                            <span>{link.name.split(' ').slice(1).join(' ')}</span>
+                            <span className={s.navIcon}><link.icon className="w-5 h-5" /></span>
+                            <span>{link.name}</span>
                         </NavLink>
                     ))}
 
@@ -95,33 +95,16 @@ export const Header: React.FC<{ user?: User | null }> = ({ user }) => {
                                             <p className={s.userEmail}>{user.email}</p>
                                         </div>
                                         <div className={s.dropdownDivider}></div>
-                                        <NavLink
-                                            to={MY_PURCHASES}
-                                            className={s.dropdownLink}
-                                            onClick={() => setShowDropdown(false)}
-                                        >
-                                            <span>💳</span> My Purchases
-                                        </NavLink>
-                                        <NavLink
-                                            to={MY_MODELS}
-                                            className={s.dropdownLink}
-                                            onClick={() => setShowDropdown(false)}
-                                        >
-                                            <span>📦</span> My Models
-                                        </NavLink>
+                                        <NavLink to={MY_PURCHASES} className={s.dropdownLink} onClick={() => setShowDropdown(false)} > <CreditCardIcon className="w-4 h-4" /> My Purchases </NavLink>
+                                        <NavLink to={MY_MODELS} className={s.dropdownLink} onClick={() => setShowDropdown(false)} > <PackageIcon className="w-4 h-4" /> My Models </NavLink>
                                         <div className={s.dropdownDivider}></div>
-                                        <button
-                                            onClick={handleLogout}
-                                            className={s.logoutButton}
-                                        >
-                                            <span>🚪</span> Logout
-                                        </button>
+                                        <button onClick={handleLogout} className={s.logoutButton} > <DoorIcon className="w-4 h-4" /> Logout </button>
                                     </div>
                                 )}
                             </div>
                         ) : (
                             <NavLink onClick={toggleMenu} to={AUTH} className={s.navBtn}>
-                                <span>🔐</span> Login
+                                <LockIcon className="w-4 h-4" /> Login
                             </NavLink>
                         )}
                     </div>

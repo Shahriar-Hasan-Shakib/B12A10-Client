@@ -1,5 +1,6 @@
 import { Layout } from "@src/components/ui/Layout";
 import { useState } from "react";
+import { EditIcon, DeleteIcon, PurchaseIcon } from "@src/assets/icons";
 
 interface ModelActionsProps {
     isOwner: boolean;
@@ -35,59 +36,23 @@ export const ModelActions = ({
                             onClick={onEdit}
                             className="px-8 py-4 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition-all duration-300 hover:shadow-lg flex items-center gap-2"
                         >
-                            <svg
-                                className="w-5 h-5"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                                />
-                            </svg>
+                            <EditIcon className="w-5 h-5" />
                             Edit Model
                         </button>,
                         <button
                             onClick={handleDeleteClick}
                             className="px-8 py-4 bg-red-600 text-white rounded-xl font-bold hover:bg-red-700 transition-all duration-300 hover:shadow-lg flex items-center gap-2"
                         >
-                            <svg
-                                className="w-5 h-5"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                                />
-                            </svg>
+                            <DeleteIcon className="w-5 h-5" />
                             Delete Model
                         </button>,
                     ]
                     : [
                         <button
                             onClick={onPurchase}
-                            className="px-12 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-bold text-lg hover:from-purple-700 hover:to-pink-700 transition-all duration-300 hover:shadow-2xl transform hover:scale-105 flex items-center gap-3"
+                            className="px-12 py-4 bg-linear-to-r from-purple-600 to-pink-600 text-white rounded-xl font-bold text-lg hover:from-purple-700 hover:to-pink-700 transition-all duration-300 hover:shadow-2xl transform hover:scale-105 flex items-center gap-3"
                         >
-                            <svg
-                                className="w-6 h-6"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-                                />
-                            </svg>
+                            <PurchaseIcon className="w-6 h-6" />
                             Purchase Model
                         </button>,
                     ]),

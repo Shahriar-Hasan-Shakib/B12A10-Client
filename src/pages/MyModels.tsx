@@ -4,6 +4,7 @@ import { Layout } from "@src/components/ui/Layout";
 import { useAuth } from "@src/hooks";
 import { mockAIModels } from "@src/data/mockModels";
 import { AUTH, ADD_MODEL } from "@src/constants/";
+import { PackageIcon } from "@src/assets/icons";
 
 interface AIModel {
     _id: string;
@@ -171,7 +172,7 @@ export const MyModels = () => {
                         {
                             empty: (
                                 <div className="col-span-3 text-center py-16">
-                                    <div className="text-6xl mb-4">📦</div>
+                                    <PackageIcon className="text-6xl mb-4 w-24 h-24 mx-auto" />
                                     <h3 className="text-2xl font-bold text-base-content mb-2">
                                         No Models Yet
                                     </h3>

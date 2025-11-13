@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { SunIcon, MoonIcon, PaletteIcon, MobileIcon, MagicIcon, SettingsIcon, BoltIcon, CheckIcon } from '@src/assets/icons';
 
 /**
  * Minimal Theme Showcase
@@ -12,7 +13,7 @@ export default function SimpleThemeDemo() {
     // Toggle dark mode
     const toggleTheme = () => {
         setIsDark(!isDark);
-    document.documentElement.classList.toggle("dark");
+        document.documentElement.classList.toggle("dark");
     };
 
     return (
@@ -28,14 +29,24 @@ export default function SimpleThemeDemo() {
                                     Minimal, Semantic, Auto-Switching Theme
                                 </p>
                             </div>
-                            
+
                             {/* Theme Toggle */}
                             <button
                                 onClick={toggleTheme}
-                                className="btn btn-outline"
+                                className="btn btn-outline flex items-center gap-2"
                                 aria-label="Toggle theme"
                             >
-                                {isDark ? '☀️ Light' : '🌙 Dark'}
+                                {isDark ? (
+                                    <>
+                                        <SunIcon className="w-5 h-5" />
+                                        <span>Light</span>
+                                    </>
+                                ) : (
+                                    <>
+                                        <MoonIcon className="w-5 h-5" />
+                                        <span>Dark</span>
+                                    </>
+                                )}
                             </button>
                         </div>
                     </div>
@@ -49,7 +60,7 @@ export default function SimpleThemeDemo() {
                         <p className="text-muted-foreground">
                             All headings automatically scale across breakpoints. No need to repeat classes!
                         </p>
-                        
+
                         <div className="spacing-responsive">
                             <div>
                                 <h1>Heading 1</h1>
@@ -57,35 +68,35 @@ export default function SimpleThemeDemo() {
                                     Auto-scales: text-3xl → sm:text-4xl → md:text-5xl → lg:text-6xl
                                 </code>
                             </div>
-                            
+
                             <div>
                                 <h2>Heading 2</h2>
                                 <code className="text-xs text-muted-foreground">
                                     Auto-scales: text-2xl → sm:text-3xl → md:text-4xl → lg:text-5xl
                                 </code>
                             </div>
-                            
+
                             <div>
                                 <h3>Heading 3</h3>
                                 <code className="text-xs text-muted-foreground">
                                     Auto-scales: text-xl → sm:text-2xl → md:text-3xl → lg:text-4xl
                                 </code>
                             </div>
-                            
+
                             <div>
                                 <h4>Heading 4</h4>
                                 <code className="text-xs text-muted-foreground">
                                     Auto-scales: text-lg → sm:text-xl → md:text-2xl
                                 </code>
                             </div>
-                            
+
                             <div>
                                 <h5>Heading 5</h5>
                                 <code className="text-xs text-muted-foreground">
                                     Auto-scales: text-base → sm:text-lg → md:text-xl
                                 </code>
                             </div>
-                            
+
                             <div>
                                 <h6>Heading 6</h6>
                                 <code className="text-xs text-muted-foreground">
@@ -96,7 +107,7 @@ export default function SimpleThemeDemo() {
 
                         <div className="border-t border-border pt-6 mt-6">
                             <p>
-                                This is a paragraph with <a href="#">an auto-styled link</a> that changes color 
+                                This is a paragraph with <a href="#">an auto-styled link</a> that changes color
                                 automatically in dark mode. The paragraph also has default responsive styling.
                             </p>
                             <p className="text-muted-foreground">
@@ -117,12 +128,12 @@ export default function SimpleThemeDemo() {
                                 <h4>Primary</h4>
                                 <p className="text-sm opacity-90">Main brand color</p>
                             </div>
-                            
+
                             <div className="card bg-secondary-500 text-white p-6 text-center">
                                 <h4>Secondary</h4>
                                 <p className="text-sm opacity-90">Accent color</p>
                             </div>
-                            
+
                             <div className="card bg-accent-500 text-white p-6 text-center">
                                 <h4>Accent</h4>
                                 <p className="text-sm opacity-90">Highlight color</p>
@@ -134,12 +145,12 @@ export default function SimpleThemeDemo() {
                                 <h5>✓ Success</h5>
                                 <p className="text-sm">Positive actions</p>
                             </div>
-                            
+
                             <div className="card border-2 border-warning text-warning p-4">
                                 <h5>⚠ Warning</h5>
                                 <p className="text-sm">Caution needed</p>
                             </div>
-                            
+
                             <div className="card border-2 border-danger text-danger p-4">
                                 <h5>✕ Danger</h5>
                                 <p className="text-sm">Critical alerts</p>
@@ -183,12 +194,12 @@ export default function SimpleThemeDemo() {
                                     <h4>Basic Card</h4>
                                     <p className="text-muted-foreground">Simple card with border</p>
                                 </div>
-                                
+
                                 <div className="card-hover">
                                     <h4>Hover Card</h4>
                                     <p className="text-muted-foreground">Hover to see effect</p>
                                 </div>
-                                
+
                                 <div className="glass p-6 rounded-lg">
                                     <h4>Glass Card</h4>
                                     <p className="text-muted-foreground">Frosted glass effect</p>
@@ -245,9 +256,9 @@ export default function SimpleThemeDemo() {
                             <p className="text-sm text-muted-foreground mb-4">
                                 1 col on mobile → 2 cols on tablet → 3 cols on desktop
                             </p>
-                                <div className="card bg-secondary-800 dark:bg-primary-900 p-6 text-center">
-                                    <h4>Item 100</h4>
-                                </div>
+                            <div className="card bg-secondary-800 dark:bg-primary-900 p-6 text-center">
+                                <h4>Item 100</h4>
+                            </div>
                             <div className="grid-responsive">
                                 {[1, 2, 3, 4, 5, 6].map((i) => (
                                     <div key={i} className="card bg-primary-800 dark:bg-secondary-800 p-6 text-center">
@@ -283,7 +294,7 @@ export default function SimpleThemeDemo() {
 
                         <div className="grid-responsive">
                             <div className="card-hover text-center">
-                                <div className="text-4xl mb-4">🎨</div>
+                                <PaletteIcon className="text-4xl mb-4 w-12 h-12 mx-auto" />
                                 <h3>Auto Dark Mode</h3>
                                 <p className="text-muted-foreground">
                                     Colors automatically switch when toggling dark mode
@@ -291,7 +302,7 @@ export default function SimpleThemeDemo() {
                             </div>
 
                             <div className="card-hover text-center">
-                                <div className="text-4xl mb-4">📱</div>
+                                <MobileIcon className="text-4xl mb-4 w-12 h-12 mx-auto" />
                                 <h3>Fully Responsive</h3>
                                 <p className="text-muted-foreground">
                                     All HTML elements adapt to screen size automatically
@@ -299,7 +310,7 @@ export default function SimpleThemeDemo() {
                             </div>
 
                             <div className="card-hover text-center">
-                                <div className="text-4xl mb-4">🧹</div>
+                                <SettingsIcon className="text-4xl mb-4 w-12 h-12 mx-auto" />
                                 <h3>Minimal Code</h3>
                                 <p className="text-muted-foreground">
                                     No redundant classes - styles defined once in CSS
@@ -307,7 +318,7 @@ export default function SimpleThemeDemo() {
                             </div>
 
                             <div className="card-hover text-center">
-                                <div className="text-4xl mb-4">🎯</div>
+                                <CheckIcon className="text-4xl mb-4 w-12 h-12 mx-auto" />
                                 <h3>Semantic Names</h3>
                                 <p className="text-muted-foreground">
                                     Easy-to-understand color variables and utilities
@@ -315,7 +326,7 @@ export default function SimpleThemeDemo() {
                             </div>
 
                             <div className="card-hover text-center">
-                                <div className="text-4xl mb-4">⚡</div>
+                                <BoltIcon className="text-4xl mb-4 w-12 h-12 mx-auto" />
                                 <h3>High Performance</h3>
                                 <p className="text-muted-foreground">
                                     CSS-first approach with zero JavaScript overhead
@@ -323,7 +334,7 @@ export default function SimpleThemeDemo() {
                             </div>
 
                             <div className="card-hover text-center">
-                                <div className="text-4xl mb-4">✨</div>
+                                <MagicIcon className="text-4xl mb-4 w-12 h-12 mx-auto" />
                                 <h3>Modern CSS</h3>
                                 <p className="text-muted-foreground">
                                     OKLCH colors, cascade layers, custom variants

@@ -1,4 +1,4 @@
-import { GitHubIcon, LinkedinIcon, XIcon } from "@src/assets/icons";
+import { GitHubIcon, LinkedinIcon, XIcon, HeartIcon, ShieldIcon, BoltIcon, CheckIcon, RobotIcon } from "@src/assets/icons";
 import { Layout } from "@src/components/ui/Layout";
 import { Link } from "react-router";
 import { HOME, ALL_MODELS, ADD_MODEL, MY_MODELS, MY_PURCHASES } from "@src/constants/";
@@ -10,7 +10,7 @@ export const Footer: React.FC = () => {
                 {
                     content: [
                         {
-                            logo: <h4 className="bg-background"><Link to="/">🤖 AI Model Inventory</Link></h4>,
+                            logo: <h4 className="bg-background flex items-center gap-2"><Link to="/" className="flex items-center gap-2"><RobotIcon className="w-6 h-6" /> AI Model Inventory</Link></h4>,
                             text: <p>Manage and discover AI models with ease. Your comprehensive platform for cataloging machine learning models, frameworks, and datasets.</p>,
                             socials: [
                                 <a href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><GitHubIcon /></a>,
@@ -49,11 +49,11 @@ export const Footer: React.FC = () => {
                         }
                     ],
                     bottom: {
-                        copyright: <p>© 2025 AI Model Inventory Manager. All rights reserved. Built with ❤️ for the AI community</p>,
+                        copyright: <p>© 2025 AI Model Inventory Manager. All rights reserved. Built with <HeartIcon className="inline w-4 h-4 text-red-500" /> for the AI community</p>,
                         badges: [
-                            <span>🔒 SSL Secured</span>,
-                            <span>✓ GDPR Compliant</span>,
-                            <span>⚡ Fast & Reliable</span>
+                            <span><ShieldIcon className="w-4 h-4" /> SSL Secured</span>,
+                            <span><CheckIcon className="w-4 h-4" /> GDPR Compliant</span>,
+                            <span><BoltIcon className="w-4 h-4" /> Fast & Reliable</span>
                         ]
                     }
                 }
@@ -86,10 +86,11 @@ export const Footer: React.FC = () => {
                     copyright: 'text-center text-sm text-gray-500 px-6',
                     badges: {
                         container: 'flex flex-wrap justify-center gap-6 mt-4',
-                        item: 'text-xs text-gray-500 bg-slate-800 px-4 py-2 rounded-full border border-slate-700'
+                        item: 'flex items-center gap-1 text-xs text-gray-500 bg-slate-800 px-4 py-2 rounded-full border border-slate-700'
                     }
                 }
             }}
         />
     );
 };
+
