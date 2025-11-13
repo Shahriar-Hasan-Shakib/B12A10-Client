@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap');
+
+@import "tailwindcss";
+
+/* ============================================
+   DaisyUI Configuration for Tailwind v4
+   Light + Dark Mode with Custom Theme
+   ============================================ */
+
+@plugin "daisyui" {
+  themes: light --default, dark --prefersdark;
+  logs: false;
+}
+
+@theme {
+  /* ============ Fonts ============ */
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+
+  /* ============ Custom Colors (Light Theme) ============ */
+  --color-primary-600: #5850ec;
+  --color-primary-700: #4c3fd1;
+  --color-secondary-600: #764ba2;
+  --color-secondary-700: #6a3f96;
+  --color-accent-500: #f093fb;
+  --color-accent-600: #e67ee8;
+}
+
+/* ============ Dark Theme Overrides ============ */
+[data-theme="dark"] {
+  --color-primary-600: #6366f1;
+  --color-primary-700: #818cf8;
+  --color-secondary-600: #a78bfa;
+  --color-secondary-700: #c4b5fd;
+  --color-accent-500: #f472b6;
+  --color-accent-600: #f9a8d4;
+}
+
+/* ============================================
+   Global Dark Mode Utilities
+   ============================================ */
+* {
+  @apply transition-colors duration-200;
+}

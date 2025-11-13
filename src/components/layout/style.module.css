@@ -1,0 +1,45 @@
+@reference "@css";
+
+/* Layout - DaisyUI Integrated with Dark Mode */
+.header { @apply sticky top-0 left-0 w-full z-50 px-4 py-4 bg-base-100/80 backdrop-blur-xl border-b border-base-300 transition-all duration-300; }
+.header.scrolled { @apply py-3 bg-base-100/95 shadow-md; }
+.container { @apply flex justify-between items-center max-w-6xl mx-auto px-4 md:px-6 lg:px-8; }
+.logo { @apply flex items-center gap-3 transition-transform duration-200 hover:scale-105; }
+.logoIcon { @apply text-2xl; animation: float 3s ease-in-out infinite; }
+.logoText { @apply text-xl font-black font-display bg-linear-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent; }
+.nav { @apply flex items-center gap-8; }
+.navActions { @apply flex items-center gap-4; }
+.navLink { @apply relative flex items-center gap-2 px-3 py-2 text-sm font-medium text-base-content/70 rounded transition-all duration-200 hover:text-base-content hover:bg-primary/10; }
+.navIcon { @apply text-base opacity-0 scale-75 transition-all duration-200; }
+.navLink:hover .navIcon, .navLink.active .navIcon { @apply opacity-100 scale-100; }
+.navLink.active { @apply text-primary bg-primary/10; }
+.navBtn { @apply inline-flex items-center gap-2 px-5 py-2.5 text-sm font-bold text-white bg-primary rounded transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5; }
+.userDropdown { @apply relative; }
+.userButton { @apply flex items-center gap-2.5 px-3 py-2 bg-transparent border border-base-300 rounded-full transition-all duration-200 hover:bg-base-200; }
+.userAvatar { @apply w-8 h-8 rounded-full object-cover border-2 border-primary/30; }
+.userNameBtn { @apply text-sm font-bold text-base-content truncate; overflow: hidden; max-width: 120px; }
+.dropdownArrow { @apply transition-transform duration-200 text-base-content/50; }
+.dropdownArrowOpen { @apply rotate-180; }
+.dropdownMenu { @apply absolute top-12 right-0 bg-base-100 border border-base-300 rounded-xl shadow-2xl p-2 z-50; min-width: 220px; animation: slideDown 0.2s ease; }
+.userInfo { @apply px-3 py-3; }
+.userName { @apply text-sm font-bold text-base-content mb-1; }
+.userEmail { @apply text-xs text-base-content/60 truncate; }
+.dropdownDivider { @apply h-px bg-base-300 my-2; }
+.dropdownLink { @apply flex items-center gap-2.5 w-full px-3 py-2.5 text-sm font-medium text-base-content/70 rounded transition-all duration-150 hover:bg-primary/10 hover:text-primary; }
+.logoutButton { @apply flex items-center gap-2.5 w-full px-3 py-2.5 text-sm font-medium text-error bg-transparent border-none rounded transition-all duration-150 hover:bg-error/10; }
+.menuBtn { @apply hidden items-center justify-center w-10 h-10 p-0 bg-transparent border border-base-300 rounded text-base text-base-content transition-all duration-200 hover:bg-base-200 hover:border-base-content/20; }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+@keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 768px) {
+  .nav { @apply fixed top-72 left-0 w-3/4 flex-col gap-2 py-6 px-4 bg-base-100 shadow-2xl transform -translate-x-full opacity-0 transition-all duration-300; max-width: 300px; height: calc(100vh - 288px); }
+  .nav.navOpen { @apply translate-x-0 opacity-100; }
+  .navLink { @apply w-full px-4 py-3.5 text-base border-b-0; }
+  .navIcon { @apply opacity-100 scale-100; }
+  .navActions { @apply mt-auto pt-4 border-t border-base-300; }
+  .navBtn { @apply w-full justify-center; }
+  .userButton { @apply w-full justify-start px-4 py-3 rounded-lg; }
+  .dropdownMenu { @apply static mt-2 shadow-none border border-base-300; }
+  .menuBtn { @apply flex; }
+}
+.footer { @apply py-12 px-6 text-center bg-base-200 border-t border-base-300 text-base-content/60 transition-all duration-300; }
+
