@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
-import { Layout } from "@src/components/ui/Layout";
+import { Button, buttonPresets } from "@src/components/ui";
+import { ModelCard } from "@src/components/features";
 import { useAuth } from "@src/hooks";
 import { mockAIModels } from "@src/data/mockModels";
 import { AUTH, ALL_MODELS } from "@src/constants/";
 import { PurchaseIcon } from "@src/assets/icons";
+import type { AIModel } from "@src/types/model.types";
 
 interface Purchase {
     _id: string;
@@ -14,6 +16,9 @@ interface Purchase {
     useCase: string;
     description: string;
     image: string;
+    dataset?: string;
+    purchased?: number;
+    createdAt?: string;
     createdBy: string;
     purchasedBy: string;
     purchasedAt: string;
@@ -50,6 +55,9 @@ export const MyPurchases = () => {
                         useCase: model.useCase,
                         description: model.description,
                         image: model.image,
+                        dataset: model.dataset,
+                        purchased: model.purchased,
+                        createdAt: model.createdAt,
                         createdBy: model.createdBy,
                         purchasedBy: user?.email || "",
                         purchasedAt: new Date().toISOString(),
@@ -68,6 +76,9 @@ export const MyPurchases = () => {
                     useCase: model.useCase,
                     description: model.description,
                     image: model.image,
+                    dataset: model.dataset,
+                    purchased: model.purchased,
+                    createdAt: model.createdAt,
                     createdBy: model.createdBy,
                     purchasedBy: user?.email || "",
                     purchasedAt: new Date().toISOString(),
@@ -89,9 +100,9 @@ export const MyPurchases = () => {
                         You need to be logged in to view your purchases.
                     </p>
                     <Link to={AUTH}>
-                        <button className="btn btn-primary">
+                        <Button {...buttonPresets.primary}>
                             Log In
-                        </button>
+                        </Button>
                     </Link>
                 </div>
             </section>
@@ -120,78 +131,60 @@ export const MyPurchases = () => {
         );
     }
 
-    const myPurchasesData = {
-        section: {
-            header: {
-                title: <h1>My Purchased Models</h1>,
-                subtitle: <p>View all the AI models you've purchased from the community</p>,
-            },
-            count: (
-                <p className="text-base-content/60">
-                    You have purchased {purchases.length} model{purchases.length !== 1 ? "s" : ""}
-                </p>
-            ),
-            purchases:
-                purchases.length > 0
-                    ? purchases.map((purchase) => ({
-                        image: <img src={purchase.image} alt={purchase.modelName} className="w-full h-48 object-cover rounded-t-xl" />,
-                        name: <h3>{purchase.modelName}</h3>,
-                        framework: <span className="badge badge-info gap-2">{purchase.framework}</span>,
-                        useCase: <span className="badge badge-success gap-2 ml-2">{purchase.useCase}</span>,
-                        description: <p className="text-base-content/70 text-sm line-clamp-3">{purchase.description}</p>,
-                        metadata: (
-                            <div className="space-y-1 text-sm text-base-content/60">
-                                <p>Created by: {purchase.createdBy}</p>
-                                <p>Purchased: {new Date(purchase.purchasedAt).toLocaleDateString()}</p>
-                            </div>
-                        ),
-                        cta: (
-                            <Link to={`/models/${purchase.modelId}`}>
-                                <button className="btn btn-primary w-full">View Details</button>
+    return (
+        <section className="bg-base-100 py-12 px-6 min-h-screen">
+            <div className="max-w-7xl mx-auto">
+                {/* Header */}
+                <div className="mb-8">
+                    <h1 className="text-4xl font-bold text-base-content mb-2">
+                        My Purchased Models
+                    </h1>
+                    <p className="text-lg text-base-content/70 mb-4">
+                        View all the AI models you've purchased from the community
+                    </p>
+                    <p className="text-base-content/60">
+                        You have purchased {purchases.length} model{purchases.length !== 1 ? "s" : ""}
+                    </p>
+                </div>
+
+                {/* Purchases Grid */}
+                {purchases.length > 0 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {purchases.map((purchase) => (
+                            <Link key={purchase._id} to={`/models/${purchase.modelId}`} className="no-underline">
+                                <ModelCard
+                                    model={{
+                                        _id: purchase.modelId,
+                                        name: purchase.modelName,
+                                        framework: purchase.framework,
+                                        useCase: purchase.useCase,
+                                        description: purchase.description,
+                                        image: purchase.image,
+                                        dataset: purchase.dataset || "",
+                                        purchased: purchase.purchased || 0,
+                                        createdAt: purchase.createdAt || new Date().toISOString(),
+                                        createdBy: purchase.createdBy,
+                                        reviews: [],
+                                        rating: 0,
+                                    } as AIModel}
+                                />
                             </Link>
-                        ),
-                    }))
-                    : [{
-                        empty: (
-                            <div className="col-span-3 text-center py-16">
-                                <PurchaseIcon className="text-6xl mb-4 w-24 h-24" />
-                                <h3 className="text-2xl font-bold text-base-content mb-2">No Purchases Yet</h3>
-                                <p className="text-base-content/70 mb-6">You haven't purchased any AI models yet. Explore the catalog to find models that suit your needs.</p>
-                                <Link to={ALL_MODELS}>
-                                    <button className="btn btn-primary">Browse Models</button>
-                                </Link>
-                            </div>
-                        ),
-                    }],
-        },
-    };
-
-    const myPurchasesStyle = {
-        container: "bg-base-100 py-12 px-6 min-h-screen",
-        section: {
-            container: "max-w-7xl mx-auto",
-            header: {
-                container: "mb-8",
-                title: "text-4xl font-bold text-base-content mb-2",
-                subtitle: "text-lg text-base-content/70",
-            },
-            count: "mb-8",
-            purchases: {
-                container: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8",
-                item: {
-                    container:
-                        "card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 border border-base-300 overflow-hidden",
-                    image: "",
-                    name: "text-xl font-bold text-base-content mb-3 px-6 pt-6",
-                    framework: "mb-2 px-6",
-                    useCase: "mb-4 px-6",
-                    description: "mb-4 px-6",
-                    metadata: "mb-4 pb-4 border-b border-base-300 px-6",
-                    cta: "mt-auto px-6 pb-6",
-                },
-            },
-        },
-    };
-
-    return <Layout data={myPurchasesData} style={myPurchasesStyle} />;
+                        ))}
+                    </div>
+                ) : (
+                    /* Empty State */
+                    <div className="text-center py-16">
+                        <PurchaseIcon className="w-24 h-24 mx-auto mb-4 text-base-content/40" />
+                        <h3 className="text-2xl font-bold text-base-content mb-2">No Purchases Yet</h3>
+                        <p className="text-base-content/70 mb-6">
+                            You haven't purchased any AI models yet. Explore the catalog to find models that suit your needs.
+                        </p>
+                        <Link to={ALL_MODELS}>
+                            <Button {...buttonPresets.primary}>Browse Models</Button>
+                        </Link>
+                    </div>
+                )}
+            </div>
+        </section>
+    );
 };

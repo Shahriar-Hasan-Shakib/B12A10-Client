@@ -7,7 +7,7 @@
 .logo { @apply flex items-center gap-3 transition-transform duration-200 hover:scale-105; }
 .logoIcon { @apply text-2xl; animation: float 3s ease-in-out infinite; }
 .logoText { @apply text-xl font-black font-display bg-linear-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent; }
-.nav { @apply flex items-center gap-8; }
+.nav { @apply flex items-center sm:gap-4 lg:gap-6; }
 .navActions { @apply flex items-center gap-4; }
 .navLink { @apply relative flex items-center gap-2 px-3 py-2 text-sm font-medium text-base-content/70 rounded transition-all duration-200 hover:text-base-content hover:bg-primary/10; }
 .navIcon { @apply text-base opacity-0 scale-75 transition-all duration-200; }

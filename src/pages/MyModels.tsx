@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { Layout } from "@src/components/ui/Layout";
+import { Button, Badge, buttonPresets } from "@src/components/ui";
 import { useAuth } from "@src/hooks";
 import { mockAIModels } from "@src/data/mockModels";
 import { AUTH, ADD_MODEL } from "@src/constants/";
@@ -69,9 +70,9 @@ export const MyModels = () => {
                         You need to be logged in to view your models.
                     </p>
                     <Link to={AUTH}>
-                        <button className="btn btn-primary">
+                        <Button {...buttonPresets.primary}>
                             Log In
-                        </button>
+                        </Button>
                     </Link>
                 </div>
             </section>
@@ -104,16 +105,10 @@ export const MyModels = () => {
         section: {
             header: {
                 title: <h1>My AI Models</h1>,
-                subtitle: (
-                    <p>
-                        Manage the AI models you've added to the inventory
-                    </p>
-                ),
+                subtitle: (<p> Manage the AI models you've added to the inventory </p>),
                 addButton: (
                     <Link to={ADD_MODEL}>
-                        <button className="btn btn-primary gap-2">
-                            + Add New Model
-                        </button>
+                        <Button {...buttonPresets.primary} className="gap-2"> + Add New Model </Button>
                     </Link>
                 ),
             },
@@ -133,37 +128,17 @@ export const MyModels = () => {
                             />
                         ),
                         name: <h3>{model.name}</h3>,
-                        framework: (
-                            <span className="badge badge-info gap-2">
-                                {model.framework}
-                            </span>
-                        ),
-                        useCase: (
-                            <span className="badge badge-success gap-2 ml-2">
-                                {model.useCase}
-                            </span>
-                        ),
-                        description: (
-                            <p className="text-base-content/70 text-sm line-clamp-3">
-                                {model.description}
-                            </p>
-                        ),
-                        stats: (
-                            <p className="text-sm text-base-content/60">
-                                Purchased {model.purchased} times
-                            </p>
-                        ),
+                        framework: (<Badge variant="info" size="sm"> {model.framework} </Badge>),
+                        useCase: (<Badge variant="success" size="sm" className="ml-2"> {model.useCase} </Badge>),
+                        description: (<p className="text-base-content/70 text-sm line-clamp-3"> {model.description} </p>),
+                        stats: (<p className="text-sm text-base-content/60"> Purchased {model.purchased} times </p>),
                         actions: (
                             <div className="flex gap-2">
                                 <Link to={`/models/${model._id}`} className="flex-1">
-                                    <button className="btn btn-primary btn-sm w-full">
-                                        View Details
-                                    </button>
+                                    <Button {...buttonPresets.primarySmall} fullWidth> View Details </Button>
                                 </Link>
                                 <Link to={`/update-model/${model._id}`} className="flex-1">
-                                    <button className="btn btn-info btn-sm w-full">
-                                        Edit
-                                    </button>
+                                    <Button variant="accent" size="sm" fullWidth> Edit </Button>
                                 </Link>
                             </div>
                         ),
@@ -180,9 +155,9 @@ export const MyModels = () => {
                                         You haven't added any AI models to the inventory.
                                     </p>
                                     <Link to={ADD_MODEL}>
-                                        <button className="btn btn-primary">
+                                        <Button {...buttonPresets.primary}>
                                             Add Your First Model
-                                        </button>
+                                        </Button>
                                     </Link>
                                 </div>
                             ),

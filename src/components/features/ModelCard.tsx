@@ -1,7 +1,7 @@
 import type { AIModel } from '@src/types/model.types';
-import { Button } from '@src/components/ui';
+import { Button, Badge } from '@src/components/ui';
 import { Link } from 'react-router-dom';
-import { PurchaseIcon } from '@src/assets/icons';
+import { DatasetIcon, PurchaseIcon } from '@src/assets/icons';
 
 interface ModelCardProps {
     model: AIModel;
@@ -22,8 +22,10 @@ export const ModelCard = ({ model, onEdit, onDelete, showActions = false }: Mode
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                 />
                 {/* Framework Badge */}
-                <div className="badge badge-primary absolute top-3 right-3 shadow-lg">
-                    {model.framework}
+                <div className="absolute top-3 right-3 shadow-lg">
+                    <Badge variant="primary" size="sm">
+                        {model.framework}
+                    </Badge>
                 </div>
             </figure>
 
@@ -37,8 +39,10 @@ export const ModelCard = ({ model, onEdit, onDelete, showActions = false }: Mode
                 </div>
 
                 {/* Use Case Badge */}
-                <div className="badge badge-secondary badge-outline mb-3">
-                    {model.useCase}
+                <div className="mb-3">
+                    <Badge variant="secondary" size="sm" outline>
+                        {model.useCase}
+                    </Badge>
                 </div>
 
                 {/* Description */}
@@ -48,7 +52,7 @@ export const ModelCard = ({ model, onEdit, onDelete, showActions = false }: Mode
 
                 {/* Dataset Info */}
                 <div className="flex items-center gap-2 text-xs text-base-content/60 mb-3">
-                    <PurchaseIcon className="w-4 h-4" />
+                    <DatasetIcon className="w-4 h-4" />
                     <span className="line-clamp-1">{model.dataset}</span>
                 </div>
 

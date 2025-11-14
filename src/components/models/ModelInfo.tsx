@@ -1,4 +1,5 @@
 import { Layout } from "@src/components/ui/Layout";
+import { Badge } from "@src/components/ui";
 
 interface ModelInfoProps {
     model: {
@@ -29,15 +30,15 @@ export const ModelInfo = ({ model }: ModelInfoProps) => {
                     title: <h1>{model.name}</h1>,
                     badges: (
                         <div className="flex flex-wrap gap-3">
-                            <span className="px-4 py-2 bg-blue-100 text-blue-800 rounded-full font-semibold">
+                            <Badge variant="primary" size="md">
                                 {model.framework}
-                            </span>
-                            <span className="px-4 py-2 bg-green-100 text-green-800 rounded-full font-semibold">
+                            </Badge>
+                            <Badge variant="success" size="md">
                                 {model.useCase}
-                            </span>
-                            <span className="px-4 py-2 bg-purple-100 text-purple-800 rounded-full font-semibold">
+                            </Badge>
+                            <Badge variant="accent" size="md">
                                 Purchased {model.purchased} times
-                            </span>
+                            </Badge>
                         </div>
                     ),
                 },

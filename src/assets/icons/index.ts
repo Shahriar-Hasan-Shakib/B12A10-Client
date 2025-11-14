@@ -1,4 +1,4 @@
-import { FaFacebook, FaGithub, FaLinkedin, FaXmark, FaYoutube, FaXTwitter, FaUser, FaEnvelope, FaLock, FaEye, FaEyeSlash, FaGoogle, FaPlus, FaPenToSquare, FaTrash, FaMagnifyingGlass, FaFilter, FaCartShopping, FaArrowRightFromBracket, FaSun, FaMoon, FaImage, FaStar, FaArrowLeft, FaArrowRight, FaCheck, FaXmark as FaTimes, FaCircleInfo, FaCircleExclamation, FaTriangleExclamation, FaCalendarDays, FaHeart, FaShield, FaBolt, FaPalette, FaMobile, FaWandMagicSparkles, FaGears, FaRobot, FaHouse, FaDoorOpen, FaBox, FaCreditCard } from "react-icons/fa6";
+import { FaFacebook, FaGithub, FaLinkedin, FaXmark, FaYoutube, FaXTwitter, FaUser, FaEnvelope, FaLock, FaEye, FaEyeSlash, FaGoogle, FaPlus, FaPenToSquare, FaTrash, FaMagnifyingGlass, FaFilter, FaCartShopping, FaArrowRightFromBracket, FaSun, FaMoon, FaImage, FaStar, FaArrowLeft, FaArrowRight, FaCheck, FaXmark as FaTimes, FaCircleInfo, FaCircleExclamation, FaTriangleExclamation, FaCalendarDays, FaHeart, FaShield, FaBolt, FaPalette, FaMobile, FaWandMagicSparkles, FaGears, FaRobot, FaHouse, FaDoorOpen, FaBox, FaCreditCard, FaDatabase } from "react-icons/fa6";
 import { IoMenu } from "react-icons/io5";
 
 // Menu Icons
@@ -32,6 +32,7 @@ export const SearchIcon = FaMagnifyingGlass;
 export const FilterIcon = FaFilter;
 
 // Model Action Icons
+export const DatasetIcon = FaDatabase
 export const PurchaseIcon = FaCartShopping;
 export const ViewIcon = FaEye;
 export const LogoutIcon = FaArrowRightFromBracket;
