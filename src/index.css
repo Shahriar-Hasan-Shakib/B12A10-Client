@@ -39,6 +39,3 @@
 /* ============================================
    Global Dark Mode Utilities
    ============================================ */
-* {
-  @apply transition-colors duration-200;
-}

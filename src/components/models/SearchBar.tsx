@@ -21,7 +21,7 @@ export const SearchBar = ({ searchTerm, onSearchChange }: SearchBarProps) => {
                 />
             ),
             icon: (
-                <SearchIcon className="absolute left-6 top-1/2 transform -translate-y-1/2 w-6 h-6 text-base-content/40 pointer-events-none" />
+                <div className="absolute left-5 top-5.5 transform -translate-y-1/2 w-6 h-6 text-xl text-base-content/40 pointer-events-none"><SearchIcon /></div>
             ),
         },
     };
