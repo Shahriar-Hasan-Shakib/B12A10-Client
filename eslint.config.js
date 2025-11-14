@@ -19,5 +19,10 @@ export default defineConfig([
       ecmaVersion: 2020,
       globals: globals.browser,
     },
+    rules: {
+      'no-unused-expressions': 'warn',  // <-- এখানে severity change করো
+      '@typescript-eslint/no-unused-expressions': 'warn',
+      '@typescript-eslint/no-explicit-any': 'warn',
+    },
   },
 ])

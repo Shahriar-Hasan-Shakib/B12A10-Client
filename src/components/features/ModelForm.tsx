@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import toast from "react-hot-toast";
 import { FRAMEWORKS, USE_CASES, COMMON_DATASETS } from "@src/constants/models";
 import { Layout } from "@src/components/ui/Layout";
@@ -20,17 +20,18 @@ interface ModelFormProps {
     isEdit?: boolean;
 }
 
-export const ModelForm = ({ initialData, isEdit = false }: ModelFormProps) => {
+export const ModelForm = ({ isEdit = false }: ModelFormProps) => {
+    const { state: model } = useLocation();
     const navigate = useNavigate();
     const { user } = useAuth();
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [formData, setFormData] = useState({
-        name: initialData?.name || "",
-        framework: initialData?.framework || "",
-        useCase: initialData?.useCase || "",
-        dataset: initialData?.dataset || "",
-        description: initialData?.description || "",
-        image: initialData?.image || "",
+        name: model?.name || "",
+        framework: model?.framework || "",
+        useCase: model?.useCase || "",
+        dataset: model?.dataset || "",
+        description: model?.description || "",
+        image: model?.image || "",
     });
 
     const handleChange = (
@@ -59,10 +60,10 @@ export const ModelForm = ({ initialData, isEdit = false }: ModelFormProps) => {
         setIsSubmitting(true);
 
         try {
-            if (isEdit && initialData?._id) {
-                await models.edit(initialData._id, formData);
+            if (isEdit && model?._id) {
+                await models.edit(model._id, formData);
                 toast.success("Model updated successfully!");
-                navigate(`/models/${initialData._id}`);
+                navigate(`/models/${model._id}`);
             } else {
                 await models.insertOne(formData);
                 toast.success("Model added successfully!");

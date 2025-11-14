@@ -1,6 +1,7 @@
 import { privateAxios, publicAxios } from "@src/config/axios";
-import { ALL_MODELS, MY_MODELS } from "@src/constants";
+import { ADD_MODEL, ALL_MODELS, DELETE_MODEL, MY_MODELS, UPDATE_MODEL } from "@src/constants";
 import type { CreateModelInput, UpdateModelInput } from "@src/types";
+import toast from "react-hot-toast";
 
 export const models = {
     getAll: ({ request }: { request: Request }) =>
@@ -17,17 +18,21 @@ export const models = {
                 return null;
             }),
 
-    findById: (id: string) => publicAxios.get(`/models/${id}`),
-
-    getMyModels: () => privateAxios.get("/models/my-models"),
-
     insertOne: (modelData: CreateModelInput) =>
-        privateAxios.post("/models", modelData),
+        privateAxios.post(ADD_MODEL, modelData),
 
     edit: (id: string, modelData: UpdateModelInput) =>
-        privateAxios.put(`/models/${id}`, modelData),
+        privateAxios.put(UPDATE_MODEL(id), modelData),
 
-    deleteOne: (id: string) => privateAxios.delete(`/models/${id}`),
+    delete: (id: string) =>{
+        privateAxios.delete(DELETE_MODEL(id))
+            .then(() => toast.success("Model deleted successfully!"))
+            .catch((error) => {
+                console.error("Delete error:", error);
+                const errorMsg = error.response?.data?.message || "Failed to delete model";
+                toast.error(errorMsg);
+            })}
+    ,
 
     purchaseModel: (id: string) => privateAxios.post(`/models/${id}/purchase`),
 

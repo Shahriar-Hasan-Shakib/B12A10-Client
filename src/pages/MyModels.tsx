@@ -3,7 +3,7 @@ import { Link, useLoaderData } from "react-router";
 import { Layout } from "@src/components/ui/Layout";
 import { Button, Badge, buttonPresets, LoadingCards } from "@src/components/ui";
 import { useAuth } from "@src/hooks";
-import { AUTH, ADD_MODEL } from "@src/constants/";
+import { AUTH, ADD_MODEL, UPDATE_MODEL, MODEL_DETAILS } from "@src/constants/";
 import { PackageIcon } from "@src/assets/icons";
 import type { AIModel } from "@src/types";
 
@@ -45,10 +45,10 @@ function MyModelsGrid() {
                         stats: (<p className="text-sm text-base-content/60"> Purchased {model.purchased} times </p>),
                         actions: (
                             <div className="flex gap-2">
-                                <Link to={`/models/${model._id}`} className="flex-1">
+                                <Link to={MODEL_DETAILS(model._id)} className="flex-1">
                                     <Button {...buttonPresets.primarySmall} fullWidth> View Details </Button>
                                 </Link>
-                                <Link to={`/update-model/${model._id}`} className="flex-1">
+                                <Link to={UPDATE_MODEL(model._id)} className="flex-1">
                                     <Button variant="accent" size="sm" fullWidth> Edit </Button>
                                 </Link>
                             </div>

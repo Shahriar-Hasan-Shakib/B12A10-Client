@@ -36,7 +36,7 @@ const router = createBrowserRouter([
                 loader: models.getAll,
             },
             {
-                path: MODEL_DETAILS,
+                path: MODEL_DETAILS(':id'),
                 element: <PrivateRoute> <ModelDetails /> </PrivateRoute>,
                 loader: async ({ params }) =>
                     privateAxios.get('/models/' + params.id).then((res) => res.data)
@@ -50,7 +50,7 @@ const router = createBrowserRouter([
                 element: <PrivateRoute> <AddModel /> </PrivateRoute>,
             },
             {
-                path: UPDATE_MODEL,
+                path: UPDATE_MODEL(':id'),
                 element: <PrivateRoute> <UpdateModel /> </PrivateRoute>,
             },
             {

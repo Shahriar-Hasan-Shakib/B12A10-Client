@@ -2,11 +2,12 @@ import { useState } from "react";
 import { useParams, useNavigate, Link, useLoaderData } from "react-router";
 import toast from "react-hot-toast";
 import { useAuth } from "@src/hooks";
-import { modelsService } from "@src/services";
-import { AUTH, ALL_MODELS } from "@src/constants/";
+import { models } from "@src/services";
+import { AUTH, ALL_MODELS, UPDATE_MODEL } from "@src/constants/";
 import { Button } from "@src/components/ui";
 import { ArrowLeft, PurchaseIcon, UserIcon, CalendarIcon } from "@src/assets/icons";
 import type { AIModel } from "@src/types/model.types";
+import { confirmDelete } from "@src/components/ui/swal";
 
 interface LoaderData {
     data: AIModel;
@@ -31,7 +32,7 @@ export const ModelDetails = () => {
 
         setPurchasing(true);
         try {
-            const response = await modelsService.purchaseModel(id);
+            const response = await models.purchaseModel(id);
             // Update the model with the new purchased count from the response
             setModel(response.data.data);
             toast.success("Model purchased successfully!");
@@ -45,21 +46,10 @@ export const ModelDetails = () => {
     };
 
     const handleDelete = async () => {
-        if (!window.confirm("Are you sure you want to delete this model?")) {
-            return;
-        }
-
         if (!id) return;
-
-        try {
-            await modelsService.deleteOne(id);
-            toast.success("Model deleted successfully!");
-            navigate(ALL_MODELS);
-        } catch (error: any) {
-            console.error("Delete error:", error);
-            const errorMsg = error.response?.data?.message || "Failed to delete model";
-            toast.error(errorMsg);
-        }
+        (await confirmDelete())
+            ? models.delete(id)
+            : navigate(-1);
     };
 
     if (!model) {
@@ -178,7 +168,7 @@ export const ModelDetails = () => {
                                     )}
                                     {isOwner && (
                                         <>
-                                            <Link to={`/update-model/${id}`} className="flex-1 min-w-[200px]">
+                                            <Link to={UPDATE_MODEL(model._id)} state={model} className="flex-1 min-w-[200px]">
                                                 <Button variant="primary" size="lg" fullWidth>
                                                     Edit Model
                                                 </Button>
