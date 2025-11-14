@@ -1,87 +1,44 @@
-import { useEffect, useState } from "react";
-import { useParams, useNavigate, Link } from "react-router";
+import { useState } from "react";
+import { useParams, useNavigate, Link, useLoaderData } from "react-router";
+import toast from "react-hot-toast";
 import { useAuth } from "@src/hooks";
-import { mockAIModels } from "@src/data/mockModels";
+import { modelsService } from "@src/services";
 import { AUTH, ALL_MODELS } from "@src/constants/";
 import { Button } from "@src/components/ui";
 import { ArrowLeft, PurchaseIcon, UserIcon, CalendarIcon } from "@src/assets/icons";
 import type { AIModel } from "@src/types/model.types";
 
+interface LoaderData {
+    data: AIModel;
+}
+
 export const ModelDetails = () => {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
     const { user } = useAuth();
-    const [model, setModel] = useState<AIModel | null>(null);
-    const [loading, setLoading] = useState(true);
+    const loaderData = useLoaderData() as LoaderData | null;
+    const [model, setModel] = useState<AIModel | null>(loaderData?.data || null);
     const [purchasing, setPurchasing] = useState(false);
-
-    useEffect(() => {
-        if (!id) return;
-
-        // Try to fetch from backend, fallback to mock data
-        const apiUrl = import.meta.env.VITE_API_URL;
-
-        if (apiUrl) {
-            fetch(`${apiUrl}/models/${id}`)
-                .then((res) => res.json())
-                .then((data) => {
-                    setModel(data);
-                    setLoading(false);
-                })
-                .catch(() => {
-                    // Fallback to mock data
-                    const mockModel = mockAIModels.find((m) => m._id === id);
-                    setModel(mockModel || null);
-                    setLoading(false);
-                });
-        } else {
-            // Use mock data
-            setTimeout(() => {
-                const mockModel = mockAIModels.find((m) => m._id === id);
-                setModel(mockModel || null);
-                setLoading(false);
-            }, 500);
-        }
-    }, [id]);
 
     const handlePurchase = async () => {
         if (!user) {
-            alert("Please log in to purchase models");
+            toast.error("Please log in to purchase models");
             navigate(AUTH);
             return;
         }
 
-        if (!model) return;
+        if (!model || !id) return;
 
         setPurchasing(true);
         try {
-            const apiUrl = import.meta.env.VITE_API_URL;
-            if (apiUrl) {
-                const response = await fetch(`${apiUrl}/models/${id}/purchase`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        purchasedBy: user.email,
-                    }),
-                });
-
-                if (response.ok) {
-                    const updatedModel = await response.json();
-                    setModel(updatedModel);
-                    alert("Model purchased successfully!");
-                } else {
-                    alert("Failed to purchase model");
-                }
-            } else {
-                // Simulate purchase with mock data
-                setModel({ ...model, purchased: model.purchased + 1 });
-                alert("Model purchased successfully! (Mock data)");
-            }
-        } catch (error) {
+            const response = await modelsService.purchaseModel(id);
+            // Update the model with the new purchased count from the response
+            setModel(response.data.data);
+            toast.success("Model purchased successfully!");
+        } catch (error: any) {
             console.error("Purchase error:", error);
-            alert("An error occurred while purchasing");
+            const errorMsg = error.response?.data?.message || "Failed to purchase model";
+            toast.error(errorMsg);
         } finally {
             setPurchasing(false);
         }
@@ -92,42 +49,18 @@ export const ModelDetails = () => {
             return;
         }
 
-        try {
-            const apiUrl = import.meta.env.VITE_API_URL;
-            if (apiUrl) {
-                const response = await fetch(`${apiUrl}/models/${id}`, {
-                    method: "DELETE",
-                });
+        if (!id) return;
 
-                if (response.ok) {
-                    alert("Model deleted successfully!");
-                    navigate(ALL_MODELS);
-                } else {
-                    alert("Failed to delete model");
-                }
-            } else {
-                alert("Model deleted successfully! (Mock data)");
-                navigate(ALL_MODELS);
-            }
-        } catch (error) {
+        try {
+            await modelsService.deleteOne(id);
+            toast.success("Model deleted successfully!");
+            navigate(ALL_MODELS);
+        } catch (error: any) {
             console.error("Delete error:", error);
-            alert("An error occurred while deleting");
+            const errorMsg = error.response?.data?.message || "Failed to delete model";
+            toast.error(errorMsg);
         }
     };
-
-    if (loading) {
-        return (
-            <section className="bg-base-200 py-12 px-6 min-h-screen">
-                <div className="max-w-6xl mx-auto">
-                    <div className="animate-pulse">
-                        <div className="h-96 bg-base-300 rounded-2xl mb-8"></div>
-                        <div className="h-8 bg-base-300 rounded w-1/2 mb-4"></div>
-                        <div className="h-4 bg-base-300/70 rounded w-3/4 mb-8"></div>
-                    </div>
-                </div>
-            </section>
-        );
-    }
 
     if (!model) {
         return (

@@ -1,70 +1,55 @@
 import { useEffect, useState } from "react";
+import { useSearchParams, useLoaderData, useNavigation } from "react-router";
 import { FilterBar } from "./FilterBar";
 import { SearchBar } from "./SearchBar";
-import { mockAIModels } from "@src/data/mockModels";
 import { ModelCard } from "@src/components/features/ModelCard";
 import type { AIModel } from "@src/types/model.types";
 
+interface LoaderData {
+    data: AIModel[];
+    count: number;
+}
+
 export const ModelsList = () => {
-    const [models, setModels] = useState<AIModel[]>([]);
-    const [filteredModels, setFilteredModels] = useState<AIModel[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [searchTerm, setSearchTerm] = useState("");
-    const [selectedFramework, setSelectedFramework] = useState("");
+    const loaderData = useLoaderData() as LoaderData;
+    const navigation = useNavigation();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [models, setModels] = useState<AIModel[]>(loaderData?.data || []);
     const [frameworks, setFrameworks] = useState<string[]>([]);
 
-    useEffect(() => {
-        // Try to fetch from backend, fallback to mock data
-        const apiUrl = import.meta.env.VITE_API_URL;
+    const searchTerm = searchParams.get("search") || "";
+    const selectedFramework = searchParams.get("framework") || "";
+    const loading = navigation.state === "loading";
 
-        if (apiUrl) {
-            fetch(`${apiUrl}/models`)
-                .then((res) => res.json())
-                .then((data) => {
-                    setModels(data);
-                    setFilteredModels(data);
-                    const uniqueFrameworks = [...new Set(data.map((m: AIModel) => m.framework))] as string[];
-                    setFrameworks(uniqueFrameworks);
-                    setLoading(false);
-                })
-                .catch(() => {
-                    // Fallback to mock data
-                    setModels(mockAIModels);
-                    setFilteredModels(mockAIModels);
-                    const uniqueFrameworks = [...new Set(mockAIModels.map((m) => m.framework))] as string[];
-                    setFrameworks(uniqueFrameworks);
-                    setLoading(false);
-                });
+    // Update models when loader data changes
+    useEffect(() => {
+        if (loaderData?.data) {
+            setModels(loaderData.data);
+            // Extract unique frameworks
+            const uniqueFrameworks = [...new Set(loaderData.data.map((m: AIModel) => m.framework))] as string[];
+            setFrameworks(uniqueFrameworks);
+        }
+    }, [loaderData]);
+
+    const handleSearchChange = (value: string) => {
+        const newParams = new URLSearchParams(searchParams);
+        if (value) {
+            newParams.set("search", value);
         } else {
-            // Use mock data if no API URL
-            setTimeout(() => {
-                setModels(mockAIModels);
-                setFilteredModels(mockAIModels);
-                const uniqueFrameworks = [...new Set(mockAIModels.map((m) => m.framework))] as string[];
-                setFrameworks(uniqueFrameworks);
-                setLoading(false);
-            }, 500);
+            newParams.delete("search");
         }
-    }, []);
+        setSearchParams(newParams);
+    };
 
-    // Filter and search logic
-    useEffect(() => {
-        let result = models;
-
-        // Filter by framework
-        if (selectedFramework) {
-            result = result.filter((m) => m.framework === selectedFramework);
+    const handleFrameworkChange = (value: string) => {
+        const newParams = new URLSearchParams(searchParams);
+        if (value && value !== "all") {
+            newParams.set("framework", value);
+        } else {
+            newParams.delete("framework");
         }
-
-        // Search by name
-        if (searchTerm) {
-            result = result.filter((m) =>
-                m.name.toLowerCase().includes(searchTerm.toLowerCase())
-            );
-        }
-
-        setFilteredModels(result);
-    }, [searchTerm, selectedFramework, models]);
+        setSearchParams(newParams);
+    };
 
     if (loading) {
         return (
@@ -99,27 +84,28 @@ export const ModelsList = () => {
 
                 {/* Search Bar */}
                 <div className="mb-4">
-                    <SearchBar searchTerm={searchTerm} onSearchChange={setSearchTerm} />
+                    <SearchBar searchTerm={searchTerm} onSearchChange={handleSearchChange} />
                 </div>
 
                 {/* Filter Bar */}
                 <div className="mb-4">
                     <FilterBar
                         selectedFramework={selectedFramework}
-                        onFrameworkChange={setSelectedFramework}
+                        onFrameworkChange={handleFrameworkChange}
                         frameworks={frameworks}
                     />
                 </div>
 
                 {/* Results Count */}
                 <p className="text-base-content/60 mb-8">
-                    Showing {filteredModels.length} of {models.length} models
+                    Showing {models.length} model{models.length !== 1 ? "s" : ""}
+                    {(searchTerm || selectedFramework) && " matching your criteria"}
                 </p>
 
                 {/* Models Grid */}
-                {filteredModels.length > 0 ? (
+                {models.length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {filteredModels.map((model) => (
+                        {models.map((model: AIModel) => (
                             <ModelCard key={model._id} model={model} />
                         ))}
                     </div>
@@ -130,8 +116,7 @@ export const ModelsList = () => {
                         </p>
                         <button
                             onClick={() => {
-                                setSearchTerm("");
-                                setSelectedFramework("");
+                                setSearchParams(new URLSearchParams());
                             }}
                             className="btn btn-primary"
                         >

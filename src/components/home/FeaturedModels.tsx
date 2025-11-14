@@ -2,35 +2,18 @@ import { useEffect, useState } from "react";
 import { mockAIModels } from "@src/data/mockModels";
 import { ModelCard } from "@src/components/features/ModelCard";
 import type { AIModel } from "@src/types/model.types";
+import { useLoaderData } from "react-router";
 
 export const FeaturedModels = () => {
+    const loaderData = useLoaderData() as { data: AIModel[] } | null;
     const [models, setModels] = useState<AIModel[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Try to fetch from backend, fallback to mock data
-        const apiUrl = import.meta.env.VITE_API_URL;
-
-        if (apiUrl) {
-            fetch(`${apiUrl}/models/recent?limit=6`)
-                .then((res) => res.json())
-                .then((data) => {
-                    setModels(data);
-                    setLoading(false);
-                })
-                .catch(() => {
-                    // Fallback to mock data
-                    setModels(mockAIModels.slice(0, 6));
-                    setLoading(false);
-                });
-        } else {
-            // Use mock data if no API URL
-            setTimeout(() => {
-                setModels(mockAIModels.slice(0, 6));
-                setLoading(false);
-            }, 500);
-        }
-    }, []);
+        if (loaderData?.data) setModels(loaderData.data);
+        else setModels(mockAIModels.slice(0, 6));
+        setLoading(false);
+    }, [loaderData]);
 
     if (loading) {
         return (

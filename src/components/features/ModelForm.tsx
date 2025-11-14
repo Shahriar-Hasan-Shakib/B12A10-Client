@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import toast from "react-hot-toast";
 import { FRAMEWORKS, USE_CASES, COMMON_DATASETS } from "@src/constants/models";
 import { Layout } from "@src/components/ui/Layout";
 import { useAuth } from "@src/hooks";
-import { AUTH, ALL_MODELS, MODEL_DETAILS } from "@src/constants/";
+import { modelsService } from "@src/services";
+import { AUTH, ALL_MODELS } from "@src/constants/";
 
 interface ModelFormProps {
     initialData?: {
@@ -44,12 +46,12 @@ export const ModelForm = ({ initialData, isEdit = false }: ModelFormProps) => {
         // Validation
         if (!formData.name || !formData.framework || !formData.useCase ||
             !formData.dataset || !formData.description || !formData.image) {
-            alert("Please fill in all fields");
+            toast.error("Please fill in all fields");
             return;
         }
 
         if (!user) {
-            alert("You must be logged in to add a model");
+            toast.error("You must be logged in to add a model");
             navigate(AUTH);
             return;
         }
@@ -57,37 +59,19 @@ export const ModelForm = ({ initialData, isEdit = false }: ModelFormProps) => {
         setIsSubmitting(true);
 
         try {
-            const url = isEdit
-                ? `${import.meta.env.VITE_API_URL}/models/${initialData?._id}`
-                : `${import.meta.env.VITE_API_URL}/models`;
-
-            const method = isEdit ? "PUT" : "POST";
-
-            const response = await fetch(url, {
-                method,
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    ...formData,
-                    createdBy: user.email,
-                }),
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                alert(
-                    isEdit
-                        ? "Model updated successfully!"
-                        : "Model added successfully!"
-                );
-                navigate(isEdit ? `${MODEL_DETAILS.replace(':id', data._id)}` : ALL_MODELS);
+            if (isEdit && initialData?._id) {
+                await modelsService.updateOne(initialData._id, formData);
+                toast.success("Model updated successfully!");
+                navigate(`/models/${initialData._id}`);
             } else {
-                alert("Failed to save model. Please try again.");
+                await modelsService.insertOne(formData);
+                toast.success("Model added successfully!");
+                navigate(ALL_MODELS);
             }
-        } catch (error) {
+        } catch (error: any) {
             console.error("Error saving model:", error);
-            alert("An error occurred. Please try again.");
+            const errorMsg = error.response?.data?.message || "Failed to save model. Please try again.";
+            toast.error(errorMsg);
         } finally {
             setIsSubmitting(false);
         }

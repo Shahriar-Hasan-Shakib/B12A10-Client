@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
+import toast from "react-hot-toast";
 import { Layout } from "@src/components/ui/Layout";
 import { Button, Badge, buttonPresets } from "@src/components/ui";
 import { useAuth } from "@src/hooks";
-import { mockAIModels } from "@src/data/mockModels";
+import { modelsService } from "@src/services";
 import { AUTH, ADD_MODEL } from "@src/constants/";
 import { PackageIcon } from "@src/assets/icons";
 
@@ -29,34 +30,19 @@ export const MyModels = () => {
             return;
         }
 
-        // Try to fetch from backend, fallback to mock data
-        const apiUrl = import.meta.env.VITE_API_URL;
-
-        if (apiUrl) {
-            fetch(`${apiUrl}/models/my-models?email=${user.email}`)
-                .then((res) => res.json())
-                .then((data) => {
-                    setModels(data);
-                    setLoading(false);
-                })
-                .catch(() => {
-                    // Fallback to mock data filtered by user email
-                    const userModels = mockAIModels.filter(
-                        (m) => m.createdBy === user.email
-                    );
-                    setModels(userModels);
-                    setLoading(false);
-                });
-        } else {
-            // Use mock data filtered by user email
-            setTimeout(() => {
-                const userModels = mockAIModels.filter(
-                    (m) => m.createdBy === user.email
-                );
-                setModels(userModels);
+        const fetchMyModels = async () => {
+            try {
+                const response = await modelsService.getMyModels();
+                setModels(response.data.data || []);
                 setLoading(false);
-            }, 500);
-        }
+            } catch (error) {
+                console.error("Error fetching my models:", error);
+                toast.error("Failed to load your models");
+                setLoading(false);
+            }
+        };
+
+        fetchMyModels();
     }, [user]);
 
     if (!user) {

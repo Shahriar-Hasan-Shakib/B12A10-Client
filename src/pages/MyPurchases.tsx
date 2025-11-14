@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
+import toast from "react-hot-toast";
 import { Button, buttonPresets } from "@src/components/ui";
 import { ModelCard } from "@src/components/features";
 import { useAuth } from "@src/hooks";
-import { mockAIModels } from "@src/data/mockModels";
+import { purchasesService } from "@src/services";
 import { AUTH, ALL_MODELS } from "@src/constants/";
 import { PurchaseIcon } from "@src/assets/icons";
 import type { AIModel } from "@src/types/model.types";
@@ -35,58 +36,19 @@ export const MyPurchases = () => {
             return;
         }
 
-        // Try to fetch from backend, fallback to mock data
-        const apiUrl = import.meta.env.VITE_API_URL;
-
-        if (apiUrl) {
-            fetch(`${apiUrl}/purchases/my-purchases?email=${user.email}`)
-                .then((res) => res.json())
-                .then((data) => {
-                    setPurchases(data);
-                    setLoading(false);
-                })
-                .catch(() => {
-                    // Fallback to mock data - simulate some purchases
-                    const mockPurchases: Purchase[] = mockAIModels.slice(0, 2).map((model) => ({
-                        _id: `purchase-${model._id}`,
-                        modelId: model._id,
-                        modelName: model.name,
-                        framework: model.framework,
-                        useCase: model.useCase,
-                        description: model.description,
-                        image: model.image,
-                        dataset: model.dataset,
-                        purchased: model.purchased,
-                        createdAt: model.createdAt,
-                        createdBy: model.createdBy,
-                        purchasedBy: user?.email || "",
-                        purchasedAt: new Date().toISOString(),
-                    }));
-                    setPurchases(mockPurchases);
-                    setLoading(false);
-                });
-        } else {
-            // Use mock data - simulate some purchases
-            setTimeout(() => {
-                const mockPurchases: Purchase[] = mockAIModels.slice(0, 2).map((model) => ({
-                    _id: `purchase-${model._id}`,
-                    modelId: model._id,
-                    modelName: model.name,
-                    framework: model.framework,
-                    useCase: model.useCase,
-                    description: model.description,
-                    image: model.image,
-                    dataset: model.dataset,
-                    purchased: model.purchased,
-                    createdAt: model.createdAt,
-                    createdBy: model.createdBy,
-                    purchasedBy: user?.email || "",
-                    purchasedAt: new Date().toISOString(),
-                }));
-                setPurchases(mockPurchases);
+        const fetchPurchases = async () => {
+            try {
+                const response = await purchasesService.getMyPurchases();
+                setPurchases(response.data.data || []);
                 setLoading(false);
-            }, 500);
-        }
+            } catch (error) {
+                console.error("Error fetching purchases:", error);
+                toast.error("Failed to load purchases");
+                setLoading(false);
+            }
+        };
+
+        fetchPurchases();
     }, [user]);
 
     if (!user) {
