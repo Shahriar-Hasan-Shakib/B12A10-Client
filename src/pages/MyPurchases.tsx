@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router";
+import { Link, useLoaderData } from "react-router";
 import toast from "react-hot-toast";
 import { Button, buttonPresets } from "@src/components/ui";
 import { ModelCard } from "@src/components/features";
@@ -27,29 +27,18 @@ interface Purchase {
 
 export const MyPurchases = () => {
     const { user } = useAuth();
-    const [purchases, setPurchases] = useState<Purchase[]>([]);
+    const purchases = useLoaderData();
+    // const purchases = useState<AIModel[]>([]);
+    // const [purchases, setPurchases] = useState<Purchase[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (!user) {
+        if (purchases) {
             setLoading(false);
-            return;
         }
+    }, [purchases]);
 
-        const fetchPurchases = async () => {
-            try {
-                const response = await purchasesService.getMyPurchases();
-                setPurchases(response.data.data || []);
-                setLoading(false);
-            } catch (error) {
-                console.error("Error fetching purchases:", error);
-                toast.error("Failed to load purchases");
-                setLoading(false);
-            }
-        };
-
-        fetchPurchases();
-    }, [user]);
+    console.log(purchases?.data);
 
     if (!user) {
         return (
@@ -112,25 +101,23 @@ export const MyPurchases = () => {
                 {/* Purchases Grid */}
                 {purchases.length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {purchases.map((purchase) => (
-                            <Link key={purchase._id} to={`/models/${purchase.modelId}`} className="no-underline">
-                                <ModelCard
-                                    model={{
-                                        _id: purchase.modelId,
-                                        name: purchase.modelName,
-                                        framework: purchase.framework,
-                                        useCase: purchase.useCase,
-                                        description: purchase.description,
-                                        image: purchase.image,
-                                        dataset: purchase.dataset || "",
-                                        purchased: purchase.purchased || 0,
-                                        createdAt: purchase.createdAt || new Date().toISOString(),
-                                        createdBy: purchase.createdBy,
-                                        reviews: [],
-                                        rating: 0,
-                                    } as AIModel}
-                                />
-                            </Link>
+                        {purchases.map((purchase: Purchase) => (
+                            <ModelCard
+                                model={{
+                                    _id: purchase.modelId,
+                                    name: purchase.modelName,
+                                    framework: purchase.framework,
+                                    useCase: purchase.useCase,
+                                    description: purchase.description,
+                                    image: purchase.image,
+                                    dataset: purchase.dataset || "",
+                                    purchased: purchase.purchased || 0,
+                                    createdAt: purchase.createdAt || new Date().toISOString(),
+                                    createdBy: purchase.createdBy,
+                                    reviews: [],
+                                    rating: 0,
+                                } as AIModel}
+                            />
                         ))}
                     </div>
                 ) : (

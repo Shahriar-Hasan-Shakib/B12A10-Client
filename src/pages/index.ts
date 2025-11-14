@@ -2,7 +2,7 @@
 export { AddModel } from './AddModel';
 export { AllModels } from './AllModels';
 export { Auth } from './Auth';
-export { ErrorPage } from './ErrorPage';
+export { ErrorPage } from './ErrorPage/ErrorPage';
 export { Home } from './Home';
 export { Login } from './Login';
 export { ModelDetails } from './ModelDetails';

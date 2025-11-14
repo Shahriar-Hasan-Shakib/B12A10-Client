@@ -1,49 +1,22 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router";
-import toast from "react-hot-toast";
+import { useState, useEffect } from "react";
+import { Link, useLoaderData } from "react-router";
 import { Layout } from "@src/components/ui/Layout";
 import { Button, Badge, buttonPresets } from "@src/components/ui";
 import { useAuth } from "@src/hooks";
-import { modelsService } from "@src/services";
 import { AUTH, ADD_MODEL } from "@src/constants/";
 import { PackageIcon } from "@src/assets/icons";
-
-interface AIModel {
-    _id: string;
-    name: string;
-    framework: string;
-    useCase: string;
-    description: string;
-    image: string;
-    createdBy: string;
-    purchased: number;
-}
+import type { AIModel } from "@src/types";
 
 export const MyModels = () => {
     const { user } = useAuth();
-    const [models, setModels] = useState<AIModel[]>([]);
+    const models = useLoaderData() as AIModel[];
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (!user) {
+        if (models) {
             setLoading(false);
-            return;
         }
-
-        const fetchMyModels = async () => {
-            try {
-                const response = await modelsService.getMyModels();
-                setModels(response.data.data || []);
-                setLoading(false);
-            } catch (error) {
-                console.error("Error fetching my models:", error);
-                toast.error("Failed to load your models");
-                setLoading(false);
-            }
-        };
-
-        fetchMyModels();
-    }, [user]);
+    }, [models]);
 
     if (!user) {
         return (

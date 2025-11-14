@@ -8,6 +8,7 @@ import { HOME, ALL_MODELS, MODEL_DETAILS, ADD_MODEL, UPDATE_MODEL, MY_MODELS, MY
 import { Root } from "@src/components/layout";
 import { Home, AddModel, AllModels, ModelDetails, UpdateModel, MyModels, MyPurchases, ErrorPage, Auth, } from "@src/pages";
 import { privateAxios, publicAxios } from "@src/config/axios";
+import { models } from "@src/services/models.service";
 
 const router = createBrowserRouter([
     {
@@ -32,18 +33,13 @@ const router = createBrowserRouter([
             {
                 path: ALL_MODELS,
                 element: <AllModels />,
-                loader: ({ request }) =>
-                    publicAxios.get('/models?' + new URL(request.url).searchParams.toString()).then((res) => res.data)
-                        .catch((error) => {
-                            console.error("Error loading models:", error);
-                            return null;
-                        }),
+                loader: models.getAll,
             },
             {
                 path: MODEL_DETAILS,
                 element: <PrivateRoute> <ModelDetails /> </PrivateRoute>,
                 loader: async ({ params }) =>
-                    privateAxios.get('/models/' + params.id).then((res) => res.data.data)
+                    privateAxios.get('/models/' + params.id).then((res) => res.data)
                         .catch((error) => {
                             console.error("Error loading models:", error);
                             return null;
@@ -59,11 +55,18 @@ const router = createBrowserRouter([
             },
             {
                 path: MY_MODELS,
-                element: <PrivateRoute> <MyModels /> </PrivateRoute>
+                element: <PrivateRoute> <MyModels /> </PrivateRoute>,
+                loader: models.getMine,
             },
             {
                 path: MY_PURCHASES,
                 element: <PrivateRoute> <MyPurchases /> </PrivateRoute>,
+                loader: async () =>
+                    privateAxios.get('/my-purchases').then((res) => res.data)
+                        .catch((error) => {
+                            console.error("Error loading my purchases:", error);
+                            return null;
+                        }),
             },
             {
 
