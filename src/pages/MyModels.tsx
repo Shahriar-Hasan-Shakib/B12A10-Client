@@ -1,64 +1,16 @@
-import { useState, useEffect } from "react";
+import { Suspense } from "react";
 import { Link, useLoaderData } from "react-router";
 import { Layout } from "@src/components/ui/Layout";
-import { Button, Badge, buttonPresets } from "@src/components/ui";
+import { Button, Badge, buttonPresets, LoadingCards } from "@src/components/ui";
 import { useAuth } from "@src/hooks";
 import { AUTH, ADD_MODEL } from "@src/constants/";
 import { PackageIcon } from "@src/assets/icons";
 import type { AIModel } from "@src/types";
 
-export const MyModels = () => {
-    const { user } = useAuth();
-    const models = useLoaderData() as AIModel[];
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        if (models) {
-            setLoading(false);
-        }
-    }, [models]);
-
-    if (!user) {
-        return (
-            <section className="bg-base-200 py-20 px-6 min-h-screen">
-                <div className="max-w-4xl mx-auto text-center">
-                    <h1 className="text-4xl font-bold text-base-content mb-4">
-                        Please Log In
-                    </h1>
-                    <p className="text-lg text-base-content/70 mb-8">
-                        You need to be logged in to view your models.
-                    </p>
-                    <Link to={AUTH}>
-                        <Button {...buttonPresets.primary}>
-                            Log In
-                        </Button>
-                    </Link>
-                </div>
-            </section>
-        );
-    }
-
-    if (loading) {
-        return (
-            <section className="bg-base-100 py-12 px-6">
-                <div className="max-w-7xl mx-auto">
-                    <div className="animate-pulse">
-                        <div className="h-8 bg-base-300 rounded w-64 mb-6"></div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            {[...Array(3)].map((_, i) => (
-                                <div key={i} className="bg-base-100 p-6 rounded-xl shadow-lg border border-base-300">
-                                    <div className="h-48 bg-base-300 rounded-lg mb-4"></div>
-                                    <div className="h-6 bg-base-300 rounded mb-2"></div>
-                                    <div className="h-4 bg-base-200 rounded mb-4"></div>
-                                    <div className="h-10 bg-base-300 rounded"></div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            </section>
-        );
-    }
+// Models grid component - only this part needs Suspense
+function MyModelsGrid() {
+    const data = useLoaderData() as { data: AIModel[] };
+    const models = data.data;
 
     const myModelsData = {
         section: {
@@ -153,4 +105,36 @@ export const MyModels = () => {
     };
 
     return <Layout data={myModelsData} style={myModelsStyle} />;
+}
+
+// Main component - no Suspense here, user auth check happens immediately
+export const MyModels = () => {
+    const { user } = useAuth();
+
+    if (!user) {
+        return (
+            <section className="bg-base-200 py-20 px-6 min-h-screen">
+                <div className="max-w-4xl mx-auto text-center">
+                    <h1 className="text-4xl font-bold text-base-content mb-4">
+                        Please Log In
+                    </h1>
+                    <p className="text-lg text-base-content/70 mb-8">
+                        You need to be logged in to view your models.
+                    </p>
+                    <Link to={AUTH}>
+                        <Button {...buttonPresets.primary}>
+                            Log In
+                        </Button>
+                    </Link>
+                </div>
+            </section>
+        );
+    }
+
+    // Only the data-dependent grid is wrapped in Suspense
+    return (
+        <Suspense fallback={<LoadingCards />}>
+            <MyModelsGrid />
+        </Suspense>
+    );
 };

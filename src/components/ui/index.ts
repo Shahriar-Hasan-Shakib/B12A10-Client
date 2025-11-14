@@ -8,6 +8,7 @@ export { Dropdown } from './Dropdown';
 export { Spinner } from './Spinner';
 export { ThemeToggle } from './ThemeToggle';
 export { Layout } from './Layout';
+export { Loading, LoadingScreen, LoadingCards, LoadingModelsList } from './Loading';
 export {
     Badge,
     PrimaryBadge,

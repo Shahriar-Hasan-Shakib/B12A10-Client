@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { FRAMEWORKS, USE_CASES, COMMON_DATASETS } from "@src/constants/models";
 import { Layout } from "@src/components/ui/Layout";
 import { useAuth } from "@src/hooks";
-import { modelsService } from "@src/services";
+import { models } from "@src/services";
 import { AUTH, ALL_MODELS } from "@src/constants/";
 
 interface ModelFormProps {
@@ -60,11 +60,11 @@ export const ModelForm = ({ initialData, isEdit = false }: ModelFormProps) => {
 
         try {
             if (isEdit && initialData?._id) {
-                await modelsService.updateOne(initialData._id, formData);
+                await models.edit(initialData._id, formData);
                 toast.success("Model updated successfully!");
                 navigate(`/models/${initialData._id}`);
             } else {
-                await modelsService.insertOne(formData);
+                await models.insertOne(formData);
                 toast.success("Model added successfully!");
                 navigate(ALL_MODELS);
             }

@@ -1,42 +1,13 @@
-import { useEffect, useState } from "react";
+import { Suspense } from "react";
+import { useLoaderData } from "react-router";
 import { mockAIModels } from "@src/data/mockModels";
 import { ModelCard } from "@src/components/features/ModelCard";
+import { LoadingCards } from "@src/components/ui";
 import type { AIModel } from "@src/types/model.types";
-import { useLoaderData } from "react-router";
 
-export const FeaturedModels = () => {
+function FeaturedModelsContent() {
     const loaderData = useLoaderData() as { data: AIModel[] } | null;
-    const [models, setModels] = useState<AIModel[]>([]);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        if (loaderData?.data) setModels(loaderData.data);
-        else setModels(mockAIModels.slice(0, 6));
-        setLoading(false);
-    }, [loaderData]);
-
-    if (loading) {
-        return (
-            <section className="bg-base-200 py-20 px-6">
-                <div className="max-w-7xl mx-auto text-center">
-                    <div className="animate-pulse">
-                        <div className="h-8 bg-base-300 rounded w-64 mx-auto mb-4"></div>
-                        <div className="h-4 bg-base-300/70 rounded w-96 mx-auto mb-12"></div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            {[...Array(6)].map((_, i) => (
-                                <div key={i} className="bg-base-100 p-6 rounded-xl shadow-lg">
-                                    <div className="h-48 bg-base-300 rounded-lg mb-4"></div>
-                                    <div className="h-6 bg-base-300 rounded mb-2"></div>
-                                    <div className="h-4 bg-base-300/70 rounded mb-4"></div>
-                                    <div className="h-10 bg-base-300 rounded"></div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            </section>
-        );
-    }
+    const models = loaderData?.data || mockAIModels.slice(0, 6);
 
     return (
         <section className="bg-base-200 py-20 px-6">
@@ -67,5 +38,13 @@ export const FeaturedModels = () => {
                 )}
             </div>
         </section>
+    );
+}
+
+export const FeaturedModels = () => {
+    return (
+        <Suspense fallback={<LoadingCards />}>
+            <FeaturedModelsContent />
+        </Suspense>
     );
 };

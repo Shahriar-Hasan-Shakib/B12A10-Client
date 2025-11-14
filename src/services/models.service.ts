@@ -24,7 +24,7 @@ export const models = {
     insertOne: (modelData: CreateModelInput) =>
         privateAxios.post("/models", modelData),
 
-    updateOne: (id: string, modelData: UpdateModelInput) =>
+    edit: (id: string, modelData: UpdateModelInput) =>
         privateAxios.put(`/models/${id}`, modelData),
 
     deleteOne: (id: string) => privateAxios.delete(`/models/${id}`),
