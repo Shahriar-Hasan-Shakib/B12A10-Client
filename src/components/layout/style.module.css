@@ -4,9 +4,11 @@
 .header { @apply sticky top-0 left-0 w-full z-50 px-4 py-4 bg-base-100/80 backdrop-blur-xl border-b border-base-300 transition-all duration-300; }
 .header.scrolled { @apply py-3 bg-base-100/95 shadow-md; }
 .container { @apply flex justify-between items-center max-w-6xl mx-auto px-4 md:px-6 lg:px-8; }
+.leftSection { @apply flex items-center gap-4; }
 .logo { @apply flex items-center gap-3 transition-transform duration-200 hover:scale-105; }
 .logoIcon { @apply text-2xl; animation: float 3s ease-in-out infinite; }
 .logoText { @apply text-xl font-black font-display bg-linear-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent; }
+.themeToggle { @apply ml-2; }
 .nav { @apply flex items-center sm:gap-4 lg:gap-6; }
 .navActions { @apply flex items-center gap-4; }
 .navLink { @apply relative flex items-center gap-2 px-3 py-2 text-sm font-medium text-base-content/70 rounded transition-all duration-200 hover:text-base-content hover:bg-primary/10; }

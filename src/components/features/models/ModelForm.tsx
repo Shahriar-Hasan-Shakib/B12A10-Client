@@ -1,3 +1,6 @@
+// #CRUD: Reusable form component for Create and Update operations
+// #VALIDATION: Client-side validation for all required fields
+// #IMGBB: Image upload integration using ImgBB service
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import toast from "react-hot-toast";
@@ -44,13 +47,14 @@ export const ModelForm = ({ isEdit = false }: ModelFormProps) => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        // Validation
+        // #VALIDATION: Ensure all required fields are filled
         if (!formData.name || !formData.framework || !formData.useCase ||
             !formData.dataset || !formData.description || !formData.image) {
             toast.error("Please fill in all fields");
             return;
         }
 
+        // #AUTH: Verify user is authenticated before submission
         if (!user) {
             toast.error("You must be logged in to add a model");
             navigate(AUTH);
@@ -60,6 +64,7 @@ export const ModelForm = ({ isEdit = false }: ModelFormProps) => {
         setIsSubmitting(true);
 
         try {
+            // #CRUD: Create or Update model based on mode
             if (isEdit && model?._id) {
                 await models.edit(model._id, formData);
                 toast.success("Model updated successfully!");

@@ -1,28 +1,34 @@
+// #AUTH: Unified authentication page for login and registration
+// #LOGIN: Email/Password and Google Sign-In authentication
+// #REGISTER: User registration with validation
+// #UI: Tab-based interface to switch between login and register
 import { useState } from 'react';
 import { LoginForm, RegisterForm } from '@src/components/auth';
-import styles from '@src/components/auth/style.module.css';
+import s from '@src/components/auth/style.module.css';
 
 type AuthMode = 'login' | 'register';
 
 export const Auth = () => {
-    const [mode, setMode] = useState<AuthMode>('login');
+    const [mode, setMode] = useState<AuthMode>('login'); // #STATE: Track current auth mode (login or register)
 
     return (
-        <div className={styles.authContainer}>
-            <div className={styles.authCard}>
-                <div className={styles.logoSection}>
-                    <h1 className={styles.logo}>ProHero</h1>
-                    <h2 className={styles.welcomeText}>Welcome!</h2>
+        <div className={s.authContainer}>
+            <div className={s.authCard}>
+                <div className={s.logoSection}>
+                    <h1 className={s.welcomeText}>Login to </h1>
+                    <h2 className={s.logo}>AI Model Inventory Manager!</h2>
                 </div>
-                <div className={styles.tabsContainer}>
-                    <button className={`${styles.tab} ${mode === 'login' ? styles.active : ''}`} onClick={() => setMode('login')}>Sign In</button>
-                    <button className={`${styles.tab} ${mode === 'register' ? styles.active : ''}`} onClick={() => setMode('register')}>Register</button>
+
+                <div className={s.tabsContainer}>
+                    <button className={`${s.tab} ${mode === 'login' ? s.active : ''}`} onClick={() => setMode('login')}>Sign In</button>
+                    <button className={`${s.tab} ${mode === 'register' ? s.active : ''}`} onClick={() => setMode('register')}>Register</button>
                 </div>
-                <div className={styles.formContainer}>
+
+                <div className={s.formContainer}>
                     {mode === 'login' ? <LoginForm /> : <RegisterForm />}
                 </div>
-                <div className={styles.footer}>
-                    <a href="/contact" className={styles.footerLink}>Contact Us / Support</a>
+                <div className={s.footer}>
+                    <a href="/contact" className={s.footerLink}>Contact Us / Support</a>
                 </div>
             </div>
         </div>

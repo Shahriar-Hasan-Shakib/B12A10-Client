@@ -41,15 +41,4 @@ export const useStorage = () => {
   };
 };
 
-// example usage
-// const components = () => {
-//   const storage = useStorage();
-      //  storage.setToken('new-token');
-//   return (
-//     <div>
-//       <h1>Welcome {storage.user?.name}</h1>
-//       <p>Your token: {storage.token}</p>
-//       <p>Current theme: {storage.theme}</p>
-//     </div>
-//   );
-// };
+

@@ -1,4 +1,4 @@
-import { FaFacebook, FaGithub, FaLinkedin, FaXmark, FaYoutube, FaXTwitter, FaUser, FaEnvelope, FaLock, FaEye, FaEyeSlash, FaGoogle, FaPlus, FaPenToSquare, FaTrash, FaMagnifyingGlass, FaFilter, FaArrowRightFromBracket, FaSun, FaMoon, FaImage, FaStar, FaArrowLeft, FaArrowRight, FaCheck, FaXmark as FaTimes, FaCircleInfo, FaCircleExclamation, FaTriangleExclamation, FaCalendarDays, FaHeart, FaShield, FaBolt, FaPalette, FaMobile, FaWandMagicSparkles, FaGears, FaRobot, FaHouse, FaDoorOpen, FaBox, FaCreditCard, FaBrain, FaComments, FaChartLine } from "react-icons/fa6";
+import { FaFacebook, FaGithub, FaLinkedin, FaXmark, FaYoutube, FaXTwitter, FaUser, FaEnvelope, FaLock, FaEye, FaEyeSlash, FaGoogle, FaPlus, FaPenToSquare, FaTrash, FaMagnifyingGlass, FaFilter, FaArrowRightFromBracket, FaSun, FaMoon, FaImage, FaStar, FaArrowLeft, FaArrowRight, FaCheck, FaXmark as FaTimes, FaCircleInfo, FaCircleExclamation, FaTriangleExclamation, FaCalendarDays, FaHeart, FaShield, FaBolt, FaPalette, FaMobile, FaWandMagicSparkles, FaGears, FaRobot, FaHouse, FaDoorOpen, FaBox, FaCreditCard, FaBrain, FaComments, FaChartLine, FaRocket } from "react-icons/fa6";
 import { IoMenu } from "react-icons/io5";
 
 
@@ -83,5 +83,7 @@ export const HomeIcon = FaHouse
 export const DoorIcon = FaDoorOpen
 export const PackageIcon = FaBox
 export const CreditCardIcon = FaCreditCard
+export const RocketIcon = FaRocket
+
 
 

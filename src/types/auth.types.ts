@@ -27,10 +27,3 @@ export interface RegisterCredentials extends LoginCredentials {
     name: string;
     photoURL: string;
 }
-
-export interface Purchase {
-    _id: string;
-    modelId: string;
-    purchasedBy: string;
-    purchasedAt: string;
-}

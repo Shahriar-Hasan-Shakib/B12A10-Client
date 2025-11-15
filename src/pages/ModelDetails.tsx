@@ -1,3 +1,8 @@
+// #READ: Display detailed information about a single AI model
+// #PURCHASE: Users can purchase models with real-time counter update
+// #UPDATE: Model creators can edit their models
+// #DELETE: Model creators can delete their models
+// #PRIVATE_ROUTE: Requires authentication to access
 import { useState } from "react";
 import { useParams, useNavigate, Link, useLoaderData } from "react-router";
 import toast from "react-hot-toast";
@@ -14,15 +19,17 @@ interface LoaderData {
 }
 
 export const ModelDetails = () => {
-    const { id } = useParams<{ id: string }>();
+    const { id } = useParams<{ id: string }>(); // #ROUTING: Extract model ID from URL parameters
     const navigate = useNavigate();
-    const { user } = useAuth();
-    const loaderData = useLoaderData() as LoaderData | null;
-    const [model, setModel] = useState<AIModel | null>(loaderData?.data || null);
-    const [purchasing, setPurchasing] = useState(false);
+    const { user } = useAuth(); // #AUTH: Get current user to check permissions
+    const loaderData = useLoaderData() as LoaderData | null; // #READ: Get pre-loaded model data from router loader
+    const [model, setModel] = useState<AIModel | null>(loaderData?.data || null); // #STATE: Store model data locally for updates
+    const [purchasing, setPurchasing] = useState(false); // #STATE: Track purchase operation state
 
+    // #PURCHASE: Handle model purchase with authentication check
     const handlePurchase = async () => {
-        if (!user) {
+
+        if (!user) { // #AUTH: Redirect to login if not authenticated
             toast.error("Please log in to purchase models");
             navigate(AUTH);
             return;
@@ -32,14 +39,9 @@ export const ModelDetails = () => {
 
         setPurchasing(true);
         try {
-            const response = await models.purchaseModel(id);
-            // Update the model with the new purchased count from the response
-            setModel(response.data.data);
-            toast.success("Model purchased successfully!");
-        } catch (error: any) {
-            console.error("Purchase error:", error);
-            const errorMsg = error.response?.data?.message || "Failed to purchase model";
-            toast.error(errorMsg);
+            const response = await models.buyModel(id);
+            setModel(response);
+
         } finally {
             setPurchasing(false);
         }
@@ -47,9 +49,10 @@ export const ModelDetails = () => {
 
     const handleDelete = async () => {
         if (!id) return;
-        (await confirmDelete())
-            ? models.delete(id)
-            : navigate(-1);
+        if (await confirmDelete()) {
+            await models.delete(id);
+            navigate(-1);
+        }
     };
 
     if (!model) {
@@ -76,7 +79,7 @@ export const ModelDetails = () => {
 
     return (
         <section className="bg-base-200 py-12 px-6 min-h-screen">
-            <div className="max-w-6xl mx-auto">
+            <div className="max-w-4xl mx-auto">
                 {/* Back Button */}
                 <Link to={ALL_MODELS}>
                     <button className="btn btn-ghost gap-2 mb-6 text-primary hover:text-primary-focus">

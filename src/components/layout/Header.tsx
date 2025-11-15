@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router';
 import { useAuth } from '@src/hooks';
 import type { User } from 'firebase/auth';
+import { ThemeToggle } from '@src/components/ui/ThemeToggle';
 import s from './style.module.css';
 
 const navigationLinks = [
@@ -58,10 +59,13 @@ export const Header: React.FC<{ user?: User | null }> = ({ user }) => {
     return (
         <header className={`${s.header} ${scrolled ? s.scrolled : ''}`} ref={headerRef}>
             <div className={s.container}>
-                <NavLink className={s.logo} to={"/"}>
-                    <RobotIcon className={`${s.logoIcon} w-6 h-6`} />
-                    <h1 className={s.logoText}>AI Models</h1>
-                </NavLink>
+                <div className={s.leftSection}>
+                    <NavLink className={s.logo} to={"/"}>
+                        <RobotIcon className={`${s.logoIcon} w-6 h-6`} />
+                        <h1 className={s.logoText}>AI Models</h1>
+                    </NavLink>
+                    <ThemeToggle className={s.themeToggle} />
+                </div>
 
                 <nav className={`${s.nav} ${isMenuOpen ? s.navOpen : ''}`}>
                     {navigationLinks.map((link) => (

@@ -1,30 +1,18 @@
+// #ARCHITECTURE: Main application entry point with global providers
+// #THEME: ThemeProvider wraps entire app for dark/light mode support
+// #AUTH: AuthProvider manages Firebase authentication state globally
 import { AuthProvider } from "@src/contexts/AuthContext";
 import { ThemeProvider } from "@src/contexts/ThemeContext";
 import AppRouter from "@src/routes";
-import { Toaster } from "react-hot-toast";
 import "./App.css";
+import { Toast } from "./components/ui";
 
 function App() {
   return (
     <ThemeProvider>
       <AuthProvider>
         <AppRouter />
-        <Toaster
-          position="top-right"
-          toastOptions={{
-            duration: 3000,
-            style: {
-              background: "var(--color-primary-600)",
-              color: "#fff",
-            },
-            success: {
-              iconTheme: {
-                primary: "var(--color-primary-600)",
-                secondary: "#fff",
-              },
-            },
-          }}
-        />
+        <Toast />
       </AuthProvider>
     </ThemeProvider>
   );

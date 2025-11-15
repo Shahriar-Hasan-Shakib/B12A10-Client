@@ -27,3 +27,4 @@ export type UpdateModelInput = Partial<CreateModelInput>;
 export type Framework = 'TensorFlow' | 'PyTorch' | 'Keras' | 'Scikit-learn' | 'JAX' | 'MXNet' | 'Other';
 
 export type UseCase = 'NLP' | 'Computer Vision' | 'Speech Recognition' | 'Reinforcement Learning' | 'Time Series' | 'Recommendation Systems' | 'Other';
+

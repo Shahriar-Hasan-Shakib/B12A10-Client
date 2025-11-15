@@ -1,9 +1,10 @@
 import axios from "axios";
 import { API_BASE_URL } from "@src/constants/api";
+import { AUTH } from "@src/constants";
 
 // Public axios instance for non-authenticated requests
 export const publicAxios = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: API_BASE_URL + '/api/v1/',
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json'
@@ -12,7 +13,7 @@ export const publicAxios = axios.create({
 
 // Private axios instance for authenticated requests
 export const privateAxios = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: API_BASE_URL + '/api/v1/',
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json'
@@ -40,7 +41,7 @@ privateAxios.interceptors.response.use(
     if (error.response?.status === 401) {
       // Token expired or invalid - clear auth and redirect
       localStorage.removeItem('authToken');
-      window.location.href = '/login';
+      window.location.href = AUTH;
     }
     return Promise.reject(error);
   }

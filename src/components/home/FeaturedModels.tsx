@@ -1,14 +1,6 @@
-import { Suspense } from "react";
-import { useLoaderData } from "react-router";
-import { mockAIModels } from "@src/data/mockModels";
-import { ModelCard } from "@src/components/features/ModelCard";
-import { LoadingCards } from "@src/components/ui";
-import type { AIModel } from "@src/types/model.types";
+import { CardGrid } from "@src/components/features/models";
 
-function FeaturedModelsContent() {
-    const loaderData = useLoaderData() as { data: AIModel[] } | null;
-    const models = loaderData?.data || mockAIModels.slice(0, 6);
-
+export const FeaturedModels = () => {
     return (
         <section className="bg-base-200 py-20 px-6">
             <div className="max-w-7xl mx-auto">
@@ -23,28 +15,12 @@ function FeaturedModelsContent() {
                 </div>
 
                 {/* Models Grid */}
-                {models.length > 0 ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {models.map((model) => (
-                            <ModelCard key={model._id} model={model} />
-                        ))}
-                    </div>
-                ) : (
-                    <div className="text-center py-12">
-                        <p className="text-base-content/60">
-                            No models available yet. Be the first to add one!
-                        </p>
-                    </div>
-                )}
+                <CardGrid
+                    type="latest"
+                    limit={6}
+                    emptyMessage="No models available yet. Be the first to add one!"
+                />
             </div>
         </section>
-    );
-}
-
-export const FeaturedModels = () => {
-    return (
-        <Suspense fallback={<LoadingCards />}>
-            <FeaturedModelsContent />
-        </Suspense>
     );
 };

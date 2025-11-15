@@ -1,3 +1,7 @@
+// #UI: Reusable card component for displaying AI model preview
+// #RESPONSIVE: Hover effects and transitions for better UX
+// #CRUD: Supports edit and delete actions for model owners
+// #PURCHASE: Displays purchase button and count
 import type { AIModel } from '@src/types/model.types';
 import { Button, Badge } from '@src/components/ui';
 import { Link } from 'react-router-dom';
@@ -7,11 +11,12 @@ interface ModelCardProps {
     model: AIModel;
     onEdit?: (id: string) => void;
     onDelete?: (id: string) => void;
+    onBuy?: (id: string) => void;
     showActions?: boolean;
+    isPurchased?: boolean;
 }
 
-// ModelCard Component - Display AI model in card format
-export const ModelCard = ({ model, onEdit, onDelete, showActions = false }: ModelCardProps) => {
+export const ModelCard = ({ model, onEdit, onDelete, onBuy, showActions = false, isPurchased = false }: ModelCardProps) => {
     return (
         <div className="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 border border-base-300 hover:border-primary group">
             {/* Model Image */}
@@ -91,6 +96,29 @@ export const ModelCard = ({ model, onEdit, onDelete, showActions = false }: Mode
                                     Delete
                                 </Button>
                             )}
+                        </div>
+                    ) : isPurchased ? (
+                        <div className="w-full flex items-center justify-center gap-2 text-success">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                            </svg>
+                            <span className="font-semibold">Purchased</span>
+                        </div>
+                    ) : onBuy ? (
+                        <div className="flex gap-2 w-full">
+                            <Link to={`/models/${model._id}`} className="flex-1">
+                                <Button variant="outline" size="md" fullWidth>
+                                    View Details
+                                </Button>
+                            </Link>
+                            <Button
+                                variant="primary"
+                                size="md"
+                                onClick={() => onBuy(model._id)}
+                                className="flex-1"
+                            >
+                                Buy Now
+                            </Button>
                         </div>
                     ) : (
                         <Link to={`/models/${model._id}`} className="w-full">

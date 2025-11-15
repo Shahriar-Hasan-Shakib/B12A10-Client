@@ -1,3 +1,6 @@
+// #AUTH: Firebase authentication context provider
+// #GOOGLE_AUTH: Implements Google Sign-In alongside email/password
+// #TOKEN: Stores JWT token in localStorage for API authorization
 import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import { type User, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut as _signOut, onAuthStateChanged, updateProfile, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
@@ -9,22 +12,27 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
 
+    // #REGISTER: Create new user with email/password and profile info
     const signUp = async ({ email, password, name, photoURL }: RegisterCredentials) => {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         await updateProfile(userCredential.user, { displayName: name, photoURL: photoURL || "" });
         setUser(userCredential.user);
 
-        // Get and store the auth token
+        // #TOKEN: Store JWT token for API authorization
         const token = await userCredential.user.getIdToken();
         localStorage.setItem('authToken', token);
     };
+
+    // #LOGIN: Sign in with email and password
     const signIn = async ({ email, password }: LoginCredentials): Promise<void> => {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
-        // Get and store the auth token
+        // #TOKEN: Store JWT token for API authorization
         const token = await userCredential.user.getIdToken();
         localStorage.setItem('authToken', token);
     };
+
+    // #GOOGLE_AUTH: Google Sign-In implementation
     const signInWithGoogle = async () => {
         const provider = new GoogleAuthProvider();
         const userCredential = await signInWithPopup(auth, provider);

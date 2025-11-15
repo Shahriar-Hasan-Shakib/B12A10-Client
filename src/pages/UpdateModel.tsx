@@ -1,58 +1,32 @@
+// #UPDATE: Edit existing AI model - Creator only
+// #PRIVATE_ROUTE: Requires authentication to access
+// #CRUD: Fetch existing model data and allow updates
+// #VALIDATION: Pre-fills form with current model data
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import { ModelForm } from '@src/components/features';
-import { mockAIModels } from "@src/data/mockModels";
 import { ALL_MODELS } from "@src/constants/";
-
-interface AIModel {
-    _id: string;
-    name: string;
-    framework: string;
-    useCase: string;
-    dataset: string;
-    description: string;
-    image: string;
-}
+import type { AIModel } from "@src/types";
+import { models } from "@src/services";
 
 export const UpdateModel = () => {
-    const { id } = useParams<{ id: string }>();
+    const { id } = useParams<{ id: string }>();  // #ROUTING: Extract model ID from URL parameters
     const navigate = useNavigate();
-    const [model, setModel] = useState<AIModel | null>(null);
-    const [loading, setLoading] = useState(true);
+    const [model, setModel] = useState<AIModel | null>(null);  // #STATE: Store fetched model data
+    const [loading, setLoading] = useState(true); // #STATE: Track loading state while fetching
 
     useEffect(() => {
-        if (!id) return;
+        const fetchModel = async () => {
+            if (!id) return;
 
-        // Try to fetch from backend, fallback to mock data
-        const apiUrl = import.meta.env.VITE_API_URL;
+            setModel(await models.getDetails({ params: { id } }));
+            setLoading(false);
+        };
 
-        if (apiUrl) {
-            fetch(`${apiUrl}/models/${id}`)
-                .then((res) => res.json())
-                .then((data) => {
-                    setModel(data);
-                    setLoading(false);
-                })
-                .catch(() => {
-                    // Fallback to mock data
-                    const mockModel = mockAIModels.find((m) => m._id === id);
-                    if (mockModel) {
-                        setModel(mockModel);
-                    }
-                    setLoading(false);
-                });
-        } else {
-            // Use mock data
-            setTimeout(() => {
-                const mockModel = mockAIModels.find((m) => m._id === id);
-                if (mockModel) {
-                    setModel(mockModel);
-                }
-                setLoading(false);
-            }, 500);
-        }
+        fetchModel();
     }, [id]);
 
+    // #UI: Show loading skeleton while fetching model data
     if (loading) {
         return (
             <section className="bg-gray-50 py-12 px-6 min-h-screen">
@@ -70,6 +44,7 @@ export const UpdateModel = () => {
         );
     }
 
+    // #ERROR: Show error message if model not found
     if (!model) {
         return (
             <section className="bg-gray-50 py-20 px-6 min-h-screen">
@@ -91,6 +66,7 @@ export const UpdateModel = () => {
         );
     }
 
+    // #UPDATE: Render ModelForm with existing data pre-filled
     return (
         <div>
             <ModelForm initialData={model} isEdit={true} />

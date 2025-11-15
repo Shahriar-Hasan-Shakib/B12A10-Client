@@ -39,3 +39,36 @@
 /* ============================================
    Global Dark Mode Utilities
    ============================================ */
+
+/* ============================================
+   Loading Animations for Route Transitions
+   ============================================ */
+@keyframes loading {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+/* ============================================
+   Reusable Grid Patterns
+   ============================================ */
+
+/* Model Card Grid - 3 column responsive layout */
+.model-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8;
+}

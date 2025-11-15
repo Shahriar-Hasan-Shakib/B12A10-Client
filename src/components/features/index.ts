@@ -1,7 +1,7 @@
 // Export all feature components
-export { FeaturedModels } from './FeaturedModels';
-export { ModelCard } from './ModelCard';
-export { ModelForm } from './ModelForm';
+export { ModelCard } from './models/ModelCard';
+export { ModelForm } from './models/ModelForm';
 export { PrivateRoute } from './PrivateRoute';
 export { SearchFilter } from './SearchFilter';
+
 
