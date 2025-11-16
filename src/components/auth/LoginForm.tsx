@@ -1,12 +1,14 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '@src/hooks';
+import { HOME } from '@src/constants/routes';
 import { GoogleIcon, EnvelopeIcon, LockIcon, EyeIcon, EyeSlashIcon, ErrorIcon, ArrowLeft } from '@src/assets/icons';
 import { Button } from '@src/components/ui';
 import styles from './style.module.css';
 
 export const LoginForm = () => {
     const navigate = useNavigate();
+    const from = useLocation().state?.from?.pathname || HOME; 
     const { signIn, signInWithGoogle } = useAuth();
     const [showEmailForm, setShowEmailForm] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
@@ -19,7 +21,7 @@ export const LoginForm = () => {
             setLoading(true);
             setError('');
             await signInWithGoogle();
-            navigate('/');
+            navigate(from);
         } catch (err: unknown) {
             const error = err as Error;
             setError(error.message || 'Failed to sign in with Google');
@@ -33,7 +35,7 @@ export const LoginForm = () => {
             setLoading(true);
             setError('');
             await signIn(formData);
-            navigate('/');
+            navigate(from);
         } catch (err: unknown) {
             const error = err as Error;
             setError(error.message || 'Failed to sign in');

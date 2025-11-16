@@ -2,42 +2,14 @@
 // #PRIVATE_ROUTE: Requires user authentication to view
 // #CRUD: Provides Edit and Delete actions for user's own models
 // #AUTH: Checks user authentication status before rendering
-import { Link, useNavigate } from "react-router";
+import { Link } from "react-router";
 import { Button, buttonPresets } from "@src/components/ui";
 import { CardGrid } from "@src/components/features/models";
 import { useAuth } from "@src/hooks";
-import { AUTH, ADD_MODEL, UPDATE_MODEL } from "@src/constants/";
-import { models } from "@src/services";
-import Swal from "sweetalert2";
+import { AUTH, ADD_MODEL } from "@src/constants/";
 
 export const MyModels = () => {
     const { user } = useAuth();
-    const navigate = useNavigate();
-
-    // #UPDATE: Navigate to edit page for specific model
-    const handleEdit = (id: string) => {
-        navigate(UPDATE_MODEL(id));
-    };
-
-    // #DELETE: Confirm and delete model with SweetAlert confirmation
-    const handleDelete = async (id: string) => {
-        // #VALIDATION: Show confirmation dialog before deletion
-        const result = await Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Yes, delete it!'
-        });
-
-        if (result.isConfirmed) {
-            // #DELETE: Call API to delete model and reload page
-            await models.delete(id);
-            window.location.reload();
-        }
-    };
 
     // #AUTH: Show login prompt if user is not authenticated
     if (!user) {
@@ -81,8 +53,6 @@ export const MyModels = () => {
                 {/* #READ: Display user's models with edit/delete actions */}
                 <CardGrid
                     type="myModels"
-                    onEdit={handleEdit}
-                    onDelete={handleDelete}
                     showActions={true}
                     emptyMessage="You haven't added any AI models yet."
                 />

@@ -229,7 +229,7 @@ export const ModelForm = ({ isEdit = false }: ModelFormProps) => {
                     </Button>
                     <Button
                         type="button"
-                        onClick={() => navigate(ALL_MODELS)}
+                        onClick={() => navigate(-1)}
                         variant="outline"
                         size="lg"
                         className="flex-1 font-bold"

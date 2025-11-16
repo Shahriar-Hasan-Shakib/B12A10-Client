@@ -1,6 +1,5 @@
 import axios from "axios";
 import { API_BASE_URL } from "@src/constants/api";
-import { AUTH } from "@src/constants";
 
 // Public axios instance for non-authenticated requests
 export const publicAxios = axios.create({
@@ -41,7 +40,6 @@ privateAxios.interceptors.response.use(
     if (error.response?.status === 401) {
       // Token expired or invalid - clear auth and redirect
       localStorage.removeItem('authToken');
-      window.location.href = AUTH;
     }
     return Promise.reject(error);
   }

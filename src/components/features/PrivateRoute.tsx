@@ -20,7 +20,6 @@ export const PrivateRoute = ({ children }: PrivateRouteProps) => {
   if (loading) {
     return <LoadingScreen />;
   }
-
   // #AUTH: Redirect to login if user is not authenticated
   // #ROUTING: Save current location in state to redirect back after login
   if (!user) {

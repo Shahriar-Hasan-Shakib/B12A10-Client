@@ -7,7 +7,7 @@ import { Button } from "@src/components/ui";
 export const GetStarted = () => (
     <section className={s.getStartedSection}>
         <div className={s.getStartedContent}>
-            <div className={s.sectionBadgeWhite}><RocketIcon /> Start Your Journey</div>
+            <div className={`${s.sectionBadgeWhite} animate-bounce`}><RocketIcon /> Start Your Journey</div>
             <h2 className={s.getStartedTitle}>Ready to Manage Your AI Models?</h2>
             <p className={s.getStartedDescription}>Join our growing community and start cataloging your AI models today. Whether you're a researcher, developer, or AI enthusiast, our platform makes it easy to organize, share, and discover cutting-edge models.</p>
             <div className={s.featuresGrid}>
