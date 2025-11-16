@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@src/hooks';
 import { GoogleIcon, EnvelopeIcon, LockIcon, EyeIcon, EyeSlashIcon, UserIcon, ErrorIcon, ArrowLeft } from '@src/assets/icons';
+import { Button } from '@src/components/ui';
 import styles from './style.module.css';
 
 export const RegisterForm = () => {
@@ -54,8 +55,23 @@ export const RegisterForm = () => {
         return (
             <div>
                 <div className={styles.socialButtons}>
-                    <button type="button" className={styles.socialButton} onClick={handleGoogleRegister} disabled={loading}><GoogleIcon />Register with Google</button>
-                    <button type="button" className={styles.socialButton} onClick={() => setShowEmailForm(true)}><EnvelopeIcon />Register with Email</button>
+                    <Button
+                        type="button"
+                        variant="outline"
+                        className={styles.socialButton}
+                        onClick={handleGoogleRegister}
+                        disabled={loading}
+                    >
+                        <GoogleIcon />Register with Google
+                    </Button>
+                    <Button
+                        type="button"
+                        variant="outline"
+                        className={styles.socialButton}
+                        onClick={() => setShowEmailForm(true)}
+                    >
+                        <EnvelopeIcon />Register with Email
+                    </Button>
                 </div>
                 <div className={styles.switchMode}>Have an account?<span className={styles.switchModeLink}>Sign in</span></div>
                 <div className={styles.disclaimer}>When you link your Google account, ProHero collects certain information stored in that account that you have configured to make available. By linking your accounts, you authorize ProHero to access and use your account on the third party service in connection with your use of ProHero.</div>
@@ -79,7 +95,15 @@ export const RegisterForm = () => {
                     <div className={styles.inputWrapper}>
                         <LockIcon className={styles.inputIcon} />
                         <input id="password" type={showPassword ? 'text' : 'password'} className={styles.input} placeholder="Enter password" value={formData.password} onChange={(e) => setFormData({ ...formData, password: e.target.value })} required disabled={loading} />
-                        <button type="button" className={styles.passwordToggle} onClick={() => setShowPassword(!showPassword)} aria-label={showPassword ? 'Hide password' : 'Show password'}>{showPassword ? <EyeSlashIcon /> : <EyeIcon />}</button>
+                        <Button
+                            type="button"
+                            variant="ghost"
+                            className={styles.passwordToggle}
+                            onClick={() => setShowPassword(!showPassword)}
+                            aria-label={showPassword ? 'Hide password' : 'Show password'}
+                        >
+                            {showPassword ? <EyeSlashIcon /> : <EyeIcon />}
+                        </Button>
                     </div>
                     <span className={styles.helperText}>Minimum of 7 characters</span>
                 </div>
@@ -96,8 +120,24 @@ export const RegisterForm = () => {
                     <label htmlFor="newsletter" className={styles.checkboxLabel}>Email me ProHero news and tips<br />You can opt out at any time</label>
                 </div>
                 <div className={styles.buttonGroup}>
-                    <button type="button" className={styles.backButton} onClick={() => setShowEmailForm(false)} disabled={loading}><ArrowLeft />Back</button>
-                    <button type="submit" className={styles.submitButton} disabled={loading}>{loading ? <span className={styles.loading} /> : 'Next'}</button>
+                    <Button
+                        type="button"
+                        variant="outline"
+                        className={styles.backButton}
+                        onClick={() => setShowEmailForm(false)}
+                        disabled={loading}
+                    >
+                        <ArrowLeft />Back
+                    </Button>
+                    <Button
+                        type="submit"
+                        variant="primary"
+                        className={styles.submitButton}
+                        disabled={loading}
+                        isLoading={loading}
+                    >
+                        {!loading && 'Next'}
+                    </Button>
                 </div>
             </form>
         </div>

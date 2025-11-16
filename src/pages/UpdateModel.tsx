@@ -5,6 +5,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import { ModelForm } from '@src/components/features';
+import { Button } from '@src/components/ui';
 import { ALL_MODELS } from "@src/constants/";
 import type { AIModel } from "@src/types";
 import { models } from "@src/services";
@@ -55,12 +56,13 @@ export const UpdateModel = () => {
                     <p className="text-lg text-gray-600 mb-8">
                         The model you're trying to edit doesn't exist.
                     </p>
-                    <button
+                    <Button
                         onClick={() => navigate(ALL_MODELS)}
-                        className="px-8 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition-all"
+                        variant="primary"
+                        size="lg"
                     >
                         Back to Models
-                    </button>
+                    </Button>
                 </div>
             </section>
         );

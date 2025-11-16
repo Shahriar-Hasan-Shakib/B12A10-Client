@@ -2,7 +2,8 @@
 
 /* ============ DaisyUI Integrated Home Styles ============ */
 
-.heroContainer { @apply min-h-screen flex items-center justify-center relative overflow-hidden px-6 py-24 bg-white; background: linear-gradient(135deg, #5850ec 0%, #764ba2 50%, #f093fb 100%); }
+.heroContainer { @apply sm:min-h-screen flex items-center justify-center relative overflow-hidden px-6 py-24 bg-white; background: linear-gradient(135deg, #5850ec 0%, #764ba2 50%, #f093fb 100%); }
+:global(.dark) .heroContainer { background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4c1d95 100%); }
 .heroContainer::before { content: ''; @apply absolute inset-0; background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(255,255,255,0.08) 0%, transparent 50%); pointer-events: none; }
 .heroContent { @apply relative z-10 max-w-2xl mx-auto text-center; }
 .heroTitle { @apply text-5xl md:text-7xl font-black leading-tight text-white mb-6 drop-shadow-lg; }
@@ -12,31 +13,44 @@
 .heroCta { @apply flex flex-col sm:flex-row gap-4 justify-center items-center flex-wrap; }
 .heroCta button { @apply px-8 py-4 rounded-lg font-bold transition-all duration-300 cursor-pointer border-none inline-flex items-center gap-2; }
 .heroCta button:first-child { @apply bg-white text-purple-600 shadow-lg hover:shadow-xl hover:-translate-y-0.5; }
+:global(.dark) .heroCta button:first-child { @apply bg-gray-800 text-purple-400; }
 .heroCta button:last-child { @apply bg-white/15 text-white backdrop-blur border-2 border-white/30 hover:bg-white/25 hover:border-white/50; }
 
 /* Featured Section */
 .featuredSection { @apply py-20 md:py-32 px-6 bg-white; }
+:global(.dark) .featuredSection { @apply bg-gray-900; }
 .sectionHeader { @apply text-center max-w-2xl mx-auto mb-16; }
 .sectionBadge { @apply inline-flex items-center gap-2 px-4 py-2 bg-purple-100 text-purple-600 rounded-full text-sm font-bold mb-4; animation: float 3s ease-in-out infinite;}
-.sectionBadgeWhite { @apply inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold mb-4 text-white; background: rgba(255, 255, 255, 0.2); }
+:global(.dark) .sectionBadge { @apply bg-purple-900/30 text-purple-400; }
+.sectionBadgeWhite { @apply animate-bounce inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold mb-4 text-white; background: rgba(255, 255, 255, 0.2); }
+:global(.dark) .sectionBadgeWhite { background: rgba(255, 255, 255, 0.1); }
 .sectionTitle { @apply text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 mb-4; }
+:global(.dark) .sectionTitle { @apply text-white; }
 @media (max-width: 768px) { .sectionTitle { @apply text-2xl; } }
 .sectionSubtitle { @apply text-lg text-gray-600 leading-relaxed; }
+:global(.dark) .sectionSubtitle { @apply text-gray-400; }
 
 /* About Section */
 .aboutSection { @apply py-20 md:py-32 px-6 bg-white; }
+:global(.dark) .aboutSection { @apply bg-gray-900; }
 .aboutGrid { @apply grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-4xl mx-auto; }
 @media (min-width: 1024px) { .aboutGrid { @apply gap-12; } }
 .featureCard { @apply relative p-8 bg-white rounded-2xl border-2 border-gray-200 transition-all duration-300 overflow-hidden; }
+:global(.dark) .featureCard { @apply bg-gray-800 border-gray-700; }
 .featureCard::before { content: ''; @apply absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-purple-600 to-pink-500 scale-y-0 transition-transform duration-300 origin-top; }
 .featureCard:hover { @apply -translate-y-1 shadow-xl border-purple-400; }
+:global(.dark) .featureCard:hover { @apply border-purple-500 shadow-2xl shadow-purple-500/20; }
 .featureCard:hover::before { transform: scaleY(1); }
 .featureIcon { @apply flex items-center justify-center w-16 h-16 rounded-xl bg-purple-100 text-3xl text-purple-600 mb-4; }
+:global(.dark) .featureIcon { @apply bg-purple-900/30 text-purple-400; }
 .featureTitle { @apply text-2xl font-bold text-gray-900 mb-3; }
+:global(.dark) .featureTitle { @apply text-white; }
 .featureDescription { @apply text-base text-gray-600 leading-relaxed; }
+:global(.dark) .featureDescription { @apply text-gray-400; }
 
 /* Get Started Section */
 .getStartedSection { @apply py-20 md:py-32 px-6 text-center relative overflow-hidden bg-linear-to-r from-blue-900 via-sky-900 to-blue-900; }
+:global(.dark) .getStartedSection { @apply from-gray-950 via-gray-900 to-gray-950; }
 .getStartedSection::before { content: ''; @apply absolute -top-1/2 -right-1/4 w-1/2 h-full opacity-10 pointer-events-none; background: radial-gradient(circle, rgba(211, 182, 182, 0.1) 0%, transparent 70%); }
 .getStartedSection::after { content: ''; @apply absolute -bottom-1/2 -left-1/4 w-1/2 h-full opacity-10 pointer-events-none; background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%); }
 .getStartedContent { @apply relative z-10 max-w-2xl mx-auto; }
@@ -45,13 +59,17 @@
 .getStartedDescription { @apply text-xl text-white/95 mb-12 leading-relaxed; }
 .featuresGrid { @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12; }
 .featureItem { @apply flex flex-col items-center gap-3 p-6 bg-white/10 backdrop-blur border border-white/20 rounded-xl transition-all duration-300; }
+:global(.dark) .featureItem { @apply bg-white/5 border-white/10; }
 .featureItem:hover { @apply -translate-y-1 bg-white/15; }
+:global(.dark) .featureItem:hover { @apply bg-white/10; }
 .featureItemIcon { @apply text-4xl text-white; }
 .featureItemText { @apply text-sm font-bold text-white text-center; }
 .ctaButtons { @apply flex flex-col sm:flex-row gap-4 justify-center flex-wrap; }
 .ctaButtons button { @apply px-8 py-4 rounded-lg font-bold transition-all duration-300 cursor-pointer border-none inline-flex items-center gap-2; }
 .ctaPrimary { @apply bg-white text-purple-600 shadow-lg hover:shadow-xl hover:-translate-y-0.5; }
+:global(.dark) .ctaPrimary { @apply bg-gray-800 text-purple-400 hover:bg-gray-700; }
 .ctaSecondary { @apply bg-transparent text-white border-2 border-white hover:bg-white/10; }
+:global(.dark) .ctaSecondary { @apply border-gray-600 hover:bg-white/5 hover:border-gray-500; }
 
 @media (max-width: 640px) {
   .aboutGrid { @apply gap-4; }

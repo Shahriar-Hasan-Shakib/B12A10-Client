@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import toast from "react-hot-toast";
 import { FRAMEWORKS, USE_CASES, COMMON_DATASETS } from "@src/constants/models";
-import { Layout } from "@src/components/ui/Layout";
+import { Layout, Button } from "@src/components/ui";
 import { useAuth } from "@src/hooks";
 import { models } from "@src/services";
 import { AUTH, ALL_MODELS } from "@src/constants/";
@@ -217,26 +217,25 @@ export const ModelForm = ({ isEdit = false }: ModelFormProps) => {
             },
             actions: (
                 <div className="flex gap-4">
-                    <button
+                    <Button
                         type="submit"
                         disabled={isSubmitting}
-                        className="flex-1 btn btn-primary px-8 py-4 font-bold text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                        variant="primary"
+                        size="lg"
+                        isLoading={isSubmitting}
+                        className="flex-1 font-bold"
                     >
-                        {isSubmitting
-                            ? isEdit
-                                ? "Updating..."
-                                : "Adding..."
-                            : isEdit
-                                ? "Update Model"
-                                : "Add Model"}
-                    </button>
-                    <button
+                        {!isSubmitting && (isEdit ? "Update Model" : "Add Model")}
+                    </Button>
+                    <Button
                         type="button"
                         onClick={() => navigate(ALL_MODELS)}
-                        className="px-8 py-4 btn btn-outline border-2 font-bold text-lg hover:bg-base-200"
+                        variant="outline"
+                        size="lg"
+                        className="flex-1 font-bold"
                     >
                         Cancel
-                    </button>
+                    </Button>
                 </div>
             ),
         },

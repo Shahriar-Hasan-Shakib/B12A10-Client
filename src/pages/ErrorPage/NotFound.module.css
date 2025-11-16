@@ -1,15 +1,33 @@
 @import 'tailwindcss';
 
-
 .wrapper { @apply min-h-screen bg-white flex items-center justify-center px-4; }
+:global(.dark) .wrapper { @apply bg-gray-900; }
+
 .container { @apply max-w-md w-full text-center; }
+
 .errorCode { @apply text-6xl font-light text-gray-300 mb-8; }
+:global(.dark) .errorCode { @apply text-gray-700; }
+
 .title { @apply text-2xl font-semibold text-gray-900 mb-4; }
+:global(.dark) .title { @apply text-white; }
+
 .description { @apply text-gray-600 mb-8 leading-relaxed; }
+:global(.dark) .description { @apply text-gray-400; }
+
 .buttonGroup { @apply flex gap-5 }
-.primaryBtn { @apply w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium; }
-.secondaryBtn { @apply w-full bg-white text-gray-700 py-3 px-6 rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors duration-200 font-medium; }
+
+.primaryBtn { @apply w-full flex-1 bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium; }
+:global(.dark) .primaryBtn { @apply bg-blue-700 hover:bg-blue-600; }
+
+.secondaryBtn { @apply w-full flex-1 bg-white text-gray-700 py-3 px-6 rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors duration-200 font-medium; }
+:global(.dark) .secondaryBtn { @apply bg-gray-800 text-gray-300 border-gray-600 hover:bg-gray-700 hover:border-gray-500; }
+
 .supportWrapper { @apply mt-5 border-t border-gray-200 pt-6; }
+:global(.dark) .supportWrapper { @apply border-gray-700; }
+
 .supportText { @apply text-gray-500 text-sm mb-2; }
+:global(.dark) .supportText { @apply text-gray-400; }
+
 .supportLink { @apply text-blue-600 hover:text-blue-700 text-sm font-medium; }
+:global(.dark) .supportLink { @apply text-blue-400 hover:text-blue-300; }
 

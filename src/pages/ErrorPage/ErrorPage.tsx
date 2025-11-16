@@ -1,4 +1,5 @@
 import s from "./NotFound.module.css";
+import { Button } from "@src/components/ui";
 
 export const ErrorPage = () => {
     return (
@@ -12,8 +13,8 @@ export const ErrorPage = () => {
                 </p>
 
                 <div className={s.buttonGroup}>
-                    <button onClick={() => (window.location.href = "/")} className={s.secondaryBtn} > Homepage </button>
-                    <button onClick={() => window.history.back()}        className={s.secondaryBtn} > Go Back </button>
+                    <Button onClick={() => (window.location.href = "/")} variant="outline" className={s.secondaryBtn}>Homepage</Button>
+                    <Button onClick={() => window.history.back()} variant="outline" className={s.secondaryBtn}>Go Back</Button>
                 </div>
 
                 <div className={s.supportWrapper}>

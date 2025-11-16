@@ -8,23 +8,50 @@ import { useEffect, useState, type ReactNode } from 'react';
 
 interface ThemeProviderProps { children: ReactNode; }
 
+// #THEME: Get system theme preference
+const getSystemTheme = (): Theme =>
+    window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
     const storage = useStorage();
 
-    const [theme, setTheme] = useState<Theme>(() => // #THEME: Initialize from localStorage or system preference
-        (storage.theme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')) as Theme
+    // #THEME: Initialize from localStorage or system preference
+    const [theme, setTheme] = useState<Theme>(() =>
+        storage.theme || getSystemTheme()
     );
+
+    // #THEME: Listen for system theme changes
+    useEffect(() => {
+        // Only listen to system changes if user hasn't set a preference
+        if (storage.theme) return;
+
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+        const handleChange = (e: MediaQueryListEvent) => {
+            setTheme(e.matches ? 'dark' : 'light');
+        };
+
+        mediaQuery.addEventListener('change', handleChange);
+
+        return () => mediaQuery.removeEventListener('change', handleChange);
+    }, [storage.theme]);
 
     useEffect(() => {
         const root = window.document.documentElement;
         root.classList.remove('light', 'dark');
         root.classList.add(theme);
         root.setAttribute('data-theme', theme); // #THEME: Set DaisyUI data-theme attribute for component styling
-        storage.setTheme(theme);  // #LOCALSTORAGE: Save theme preference
+
+        // Only save to localStorage if user explicitly toggled
+        if (storage.theme !== null) {
+            storage.setTheme(theme);
+        }
     }, [theme, storage]);
 
     const toggleTheme = () => { // #THEME: Toggle between light and dark modes
-        setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+        const newTheme = theme === 'light' ? 'dark' : 'light';
+        setTheme(newTheme);
+        storage.setTheme(newTheme); // #LOCALSTORAGE: Save user preference
     };
 
     const value: ThemeContextType = { theme, toggleTheme };

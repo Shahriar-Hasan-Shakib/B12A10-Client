@@ -20,7 +20,7 @@ export const ThemeToggle = ({ className = '', showLabel = false }: ThemeTogglePr
             />
 
             {/* Sun icon for light mode */}
-            <SunIcon className="swap-off fill-current w-6 h-6" />
+            <SunIcon className="swap-off w-6 h-6 text-gray-500" />
 
             {/* Moon icon for dark mode */}
             <MoonIcon className="swap-on fill-current w-6 h-6" />

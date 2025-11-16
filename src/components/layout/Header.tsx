@@ -5,6 +5,7 @@ import { NavLink, useNavigate } from 'react-router';
 import { useAuth } from '@src/hooks';
 import type { User } from 'firebase/auth';
 import { ThemeToggle } from '@src/components/ui/ThemeToggle';
+import { Button } from '@src/components/ui';
 import s from './style.module.css';
 
 const navigationLinks = [
@@ -80,7 +81,12 @@ export const Header: React.FC<{ user?: User | null }> = ({ user }) => {
                     <div className={s.navActions}>
                         {user ? (
                             <div className={s.userDropdown} ref={dropdownRef}>
-                                <button onClick={toggleDropdown} className={s.userButton} aria-label="User menu">
+                                <Button
+                                    onClick={toggleDropdown}
+                                    variant="ghost"
+                                    className={s.userButton}
+                                    aria-label="User menu"
+                                >
                                     <img
                                         src={user.photoURL || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + user.email}
                                         alt={user.displayName || 'User'}
@@ -90,7 +96,7 @@ export const Header: React.FC<{ user?: User | null }> = ({ user }) => {
                                     <svg className={`${s.dropdownArrow} ${showDropdown ? s.dropdownArrowOpen : ''}`} width="12" height="12" viewBox="0 0 12 12" fill="none">
                                         <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                     </svg>
-                                </button>
+                                </Button>
 
                                 {showDropdown && (
                                     <div className={s.dropdownMenu}>
@@ -102,7 +108,13 @@ export const Header: React.FC<{ user?: User | null }> = ({ user }) => {
                                         <NavLink to={MY_PURCHASES} className={s.dropdownLink} onClick={() => setShowDropdown(false)} > <CreditCardIcon className="w-4 h-4" /> My Purchases </NavLink>
                                         <NavLink to={MY_MODELS} className={s.dropdownLink} onClick={() => setShowDropdown(false)} > <PackageIcon className="w-4 h-4" /> My Models </NavLink>
                                         <div className={s.dropdownDivider}></div>
-                                        <button onClick={handleLogout} className={s.logoutButton} > <DoorIcon className="w-4 h-4" /> Logout </button>
+                                        <Button
+                                            onClick={handleLogout}
+                                            variant="ghost"
+                                            className={s.logoutButton}
+                                        >
+                                            <DoorIcon className="w-4 h-4" /> Logout
+                                        </Button>
                                     </div>
                                 )}
                             </div>
@@ -114,9 +126,14 @@ export const Header: React.FC<{ user?: User | null }> = ({ user }) => {
                     </div>
                 </nav>
 
-                <button className={s.menuBtn} onClick={toggleMenu} aria-label='Toggle Menu'>
+                <Button
+                    variant="ghost"
+                    className={s.menuBtn}
+                    onClick={toggleMenu}
+                    aria-label='Toggle Menu'
+                >
                     {isMenuOpen ? <CloseIcon /> : <MenuIcon />}
-                </button>
+                </Button>
             </div>
         </header>
     );

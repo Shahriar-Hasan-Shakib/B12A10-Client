@@ -2,6 +2,7 @@ import s from "./style.module.css";
 import { AUTH } from "@src/constants";
 import { Link } from "react-router";
 import { AddIcon, SearchIcon, UserIcon, StarIcon, RocketIcon } from "@src/assets/icons";
+import { Button } from "@src/components/ui";
 
 export const GetStarted = () => (
     <section className={s.getStartedSection}>
@@ -16,8 +17,8 @@ export const GetStarted = () => (
                 <div className={s.featureItem}><div className={s.featureItemIcon}><StarIcon /></div><p className={s.featureItemText}>Track Popularity</p></div>
             </div>
             <div className={s.ctaButtons}>
-                <Link to={AUTH}><button className={s.ctaPrimary}><RocketIcon /> Create Free Account</button></Link>
-                <Link to={AUTH}><button className={s.ctaSecondary}>Sign In</button></Link>
+                <Link to={AUTH}><Button className={s.ctaPrimary} variant="primary"><RocketIcon /> Create Free Account</Button></Link>
+                <Link to={AUTH}><Button className={s.ctaSecondary} variant="secondary">Sign In</Button></Link>
             </div>
         </div>
     </section>

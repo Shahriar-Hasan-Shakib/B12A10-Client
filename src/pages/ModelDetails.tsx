@@ -82,10 +82,10 @@ export const ModelDetails = () => {
             <div className="max-w-4xl mx-auto">
                 {/* Back Button */}
                 <Link to={ALL_MODELS}>
-                    <button className="btn btn-ghost gap-2 mb-6 text-primary hover:text-primary-focus">
+                    <Button variant="ghost" className="gap-2 mb-6 text-primary hover:text-primary-focus">
                         <ArrowLeft className="w-5 h-5" />
                         Back to Models
-                    </button>
+                    </Button>
                 </Link>
 
                 <div className="space-y-8">

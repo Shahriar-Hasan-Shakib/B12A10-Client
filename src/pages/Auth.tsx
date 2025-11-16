@@ -4,6 +4,7 @@
 // #UI: Tab-based interface to switch between login and register
 import { useState } from 'react';
 import { LoginForm, RegisterForm } from '@src/components/auth';
+import { Button } from '@src/components/ui';
 import s from '@src/components/auth/style.module.css';
 
 type AuthMode = 'login' | 'register';
@@ -20,8 +21,20 @@ export const Auth = () => {
                 </div>
 
                 <div className={s.tabsContainer}>
-                    <button className={`${s.tab} ${mode === 'login' ? s.active : ''}`} onClick={() => setMode('login')}>Sign In</button>
-                    <button className={`${s.tab} ${mode === 'register' ? s.active : ''}`} onClick={() => setMode('register')}>Register</button>
+                    <Button
+                        variant="ghost"
+                        className={`${s.tab} ${mode === 'login' ? s.active : ''}`}
+                        onClick={() => setMode('login')}
+                    >
+                        Sign In
+                    </Button>
+                    <Button
+                        variant="ghost"
+                        className={`${s.tab} ${mode === 'register' ? s.active : ''}`}
+                        onClick={() => setMode('register')}
+                    >
+                        Register
+                    </Button>
                 </div>
 
                 <div className={s.formContainer}>

@@ -1,4 +1,5 @@
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
+import { LoaderIcon } from 'react-hot-toast';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     children: ReactNode;
@@ -27,13 +28,17 @@ export const Button = ({ children, variant = 'primary', size = 'md', isLoading =
     };
 
     const widthStyle = fullWidth ? 'btn-block' : '';
-    const loadingClass = isLoading ? 'loading loading-spinner' : '';
 
-    const combinedStyles = `${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${widthStyle} ${loadingClass} ${className}`.trim();
+    const combinedStyles = `${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${widthStyle} ${className}`.trim();
 
     return (
         <button className={combinedStyles} disabled={disabled || isLoading} {...props}>
-            {!isLoading && children}
+            {isLoading ? (
+                <span className="flex items-center gap-2">
+                    <LoaderIcon />
+                    <span>Loading...</span>
+                </span>
+            ) : children}
         </button>
     );
 };

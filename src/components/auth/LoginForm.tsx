@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@src/hooks';
 import { GoogleIcon, EnvelopeIcon, LockIcon, EyeIcon, EyeSlashIcon, ErrorIcon, ArrowLeft } from '@src/assets/icons';
+import { Button } from '@src/components/ui';
 import styles from './style.module.css';
 
 export const LoginForm = () => {
@@ -45,8 +46,23 @@ export const LoginForm = () => {
         return (
             <div>
                 <div className={styles.socialButtons}>
-                    <button type="button" className={styles.socialButton} onClick={handleGoogleSignIn} disabled={loading}><GoogleIcon />Sign in with Google</button>
-                    <button type="button" className={styles.socialButton} onClick={() => setShowEmailForm(true)}><EnvelopeIcon />Sign in with Email</button>
+                    <Button
+                        type="button"
+                        variant="outline"
+                        className={styles.socialButton}
+                        onClick={handleGoogleSignIn}
+                        disabled={loading}
+                    >
+                        <GoogleIcon />Sign in with Google
+                    </Button>
+                    <Button
+                        type="button"
+                        variant="outline"
+                        className={styles.socialButton}
+                        onClick={() => setShowEmailForm(true)}
+                    >
+                        <EnvelopeIcon />Sign in with Email
+                    </Button>
                 </div>
                 <div className={styles.switchMode}>Don't have an account?<span className={styles.switchModeLink}>Create one</span></div>
             </div>
@@ -69,15 +85,39 @@ export const LoginForm = () => {
                     <div className={styles.inputWrapper}>
                         <LockIcon className={styles.inputIcon} />
                         <input id="password" type={showPassword ? 'text' : 'password'} className={styles.input} placeholder="Enter password" value={formData.password} onChange={(e) => setFormData({ ...formData, password: e.target.value })} required disabled={loading} />
-                        <button type="button" className={styles.passwordToggle} onClick={() => setShowPassword(!showPassword)} aria-label={showPassword ? 'Hide password' : 'Show password'}>{showPassword ? <EyeSlashIcon /> : <EyeIcon />}</button>
+                        <Button
+                            type="button"
+                            variant="ghost"
+                            className={styles.passwordToggle}
+                            onClick={() => setShowPassword(!showPassword)}
+                            aria-label={showPassword ? 'Hide password' : 'Show password'}
+                        >
+                            {showPassword ? <EyeSlashIcon /> : <EyeIcon />}
+                        </Button>
                     </div>
                 </div>
                 <div className={styles.forgotPassword}>
                     <a href="/forgot-password" className={styles.forgotPasswordLink}>Forgot Username or Password</a>
                 </div>
                 <div className={styles.buttonGroup}>
-                    <button type="button" className={styles.backButton} onClick={() => setShowEmailForm(false)} disabled={loading}><ArrowLeft />Back</button>
-                    <button type="submit" className={styles.submitButton} disabled={loading}>{loading ? <span className={styles.loading} /> : 'Sign In'}</button>
+                    <Button
+                        type="button"
+                        variant="outline"
+                        className={styles.backButton}
+                        onClick={() => setShowEmailForm(false)}
+                        disabled={loading}
+                    >
+                        <ArrowLeft />Back
+                    </Button>
+                    <Button
+                        type="submit"
+                        variant="primary"
+                        className={styles.submitButton}
+                        disabled={loading}
+                        isLoading={loading}
+                    >
+                        {!loading && 'Sign In'}
+                    </Button>
                 </div>
             </form>
         </div>

@@ -3,14 +3,14 @@
 /* ============ DaisyUI Integrated Auth Styles with Dark Mode ============ */
 
 .authContainer { @apply min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-base-200; }
-.authContainer::before { content: ''; @apply absolute -bottom-1/10 -right-1/10 opacity-20 z-0; width: 40%; height: 60%; background: linear-gradient(135deg, #f093fb, #764ba2); border-radius: 50% 0 0 0; }
+/* .authContainer::before { content: ''; @apply absolute -bottom-1/10 -right-1/10 opacity-20 z-0; width: 40%; height: 60%; background: linear-gradient(135deg, #f093fb, #764ba2); border-radius: 50% 0 0 0; } */
 .authCard { @apply rounded-3xl shadow-2xl w-full max-w-md p-12 relative z-10 bg-base-100; animation: fadeInUp 0.5s ease-out; }
 
 @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
 .logoSection { @apply text-center mb-8; }
 .welcomeText { @apply text-2xl font-bold text-base-content mb-5; }
-.logo { @apply text-2xl font-black font-display mb-4; background: linear-gradient(135deg, #5850ec, #24a46d); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.logo { @apply text-2xl font-black font-display mb-4; background: linear-gradient(135deg, #5850ec, #5be9ac); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 
 .tabsContainer { @apply flex gap-8 justify-center mb-8 border-b-2 border-base-300 relative; }
 .tab { @apply bg-none border-none px-4 py-3 text-base font-medium text-base-content/60 cursor-pointer relative transition-colors duration-300; }

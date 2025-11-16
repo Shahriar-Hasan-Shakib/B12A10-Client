@@ -8,7 +8,7 @@ export const useStorage = () => {
   const [expiresAt, setExpiresAt] = useLocalStorage('auth_expires_at', null);
 
   // Preferences
-  const [theme, setTheme] = useLocalStorage('user_theme', 'light');
+  const [theme, setTheme] = useLocalStorage<'light' | 'dark' | null>('user_theme', null);
 
   // Cart
   const [cartItems, setCartItems] = useLocalStorage('cart_items', []);
